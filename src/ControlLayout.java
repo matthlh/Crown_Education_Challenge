@@ -2,9 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ControlLayout extends JPanel {
-
-    JButton start;
-
     JLabel density;
     JSlider densitySlider;
     JLabel chosenDensity;
@@ -23,6 +20,9 @@ public class ControlLayout extends JPanel {
 
     GraphLayout graphLayout;
 
+    JButton start;
+    JButton reset;
+
     public ControlLayout(GraphLayout gl) {
         this.graphLayout = gl;
         setLayout(new GridLayout(5, 3));
@@ -31,15 +31,13 @@ public class ControlLayout extends JPanel {
     }
 
     public void drawComponents() {
-        start = new JButton("Start Simulation");
-
         density = new JLabel("Population Size:");
         densitySlider = new JSlider(0, 10000);
-        chosenDensity = new JLabel("1000", SwingConstants.CENTER);
+        chosenDensity = new JLabel("1000 People", SwingConstants.CENTER);
 
-        duration = new JLabel("Disease Duration:");
+        duration = new JLabel("Disease Duration (Days):");
         durationSlider = new JSlider(0, 50);
-        chosenDuration = new JLabel("10", SwingConstants.CENTER);
+        chosenDuration = new JLabel("10 Days", SwingConstants.CENTER);
 
         socialDistance = new JLabel("Percentage of People Social Distancing:");
         socialDistanceSlider = new JSlider(0, 100);
@@ -49,20 +47,22 @@ public class ControlLayout extends JPanel {
         wearingMaskSlider = new JSlider(0, 100);
         chosenWearingMask = new JLabel("0%", SwingConstants.CENTER);
 
+        start = new JButton("Start Simulation");
+        reset = new JButton("Reset Simulation");
+
         setFactorSettings(densitySlider, 1000, 2000, 100);
         setFactorSettings(durationSlider, 10, 10, 1);
         setFactorSettings(socialDistanceSlider, 0, 10, 1);
         setFactorSettings(wearingMaskSlider, 0, 10, 1);
 
-        start.setBackground(Color.GREEN);
+        densitySlider.addChangeListener(new SliderListener(chosenDensity, densitySlider, " People"));
+        durationSlider.addChangeListener(new SliderListener(chosenDuration, durationSlider, " Days"));
 
-        densitySlider.addChangeListener(new SliderListener(chosenDensity, densitySlider, false));
-        durationSlider.addChangeListener(new SliderListener(chosenDuration, durationSlider, false));
+        socialDistanceSlider.addChangeListener(new SliderListener(chosenSocialDistance, socialDistanceSlider, "%"));
+        wearingMaskSlider.addChangeListener(new SliderListener(chosenWearingMask, wearingMaskSlider, "%"));
 
-        socialDistanceSlider.addChangeListener(new SliderListener(chosenSocialDistance, socialDistanceSlider, true));
-        wearingMaskSlider.addChangeListener(new SliderListener(chosenWearingMask, wearingMaskSlider, true));
-
-        start.addActionListener(new ButtonListener(this, graphLayout));
+        start.addActionListener(new ButtonListener(this, graphLayout, start));
+        reset.addActionListener(new ButtonListener(this, graphLayout, reset));
 
         add(density);
         add(densitySlider);
@@ -82,7 +82,7 @@ public class ControlLayout extends JPanel {
 
         add(new JLabel());
         add(start);
-        add(new JLabel());
+        add(reset);
     }
 
     public void setFactorSettings(JSlider slider, int value, int majorTick, int minorTick) {

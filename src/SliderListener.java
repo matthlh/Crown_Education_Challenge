@@ -6,20 +6,17 @@ public class SliderListener implements ChangeListener {
 
     private JLabel label;
     private JSlider slider;
-    private boolean isPercentage;
+    private String suffix;
 
-    public SliderListener(JLabel label, JSlider slider, boolean isPercentage) {
+    public SliderListener(JLabel label, JSlider slider, String suffix) {
         this.label = label;
         this.slider = slider;
-        this.isPercentage = isPercentage;
+        this.suffix = suffix;
     }
 
     @Override
     public void stateChanged(ChangeEvent e) {
-        if(isPercentage) {
-            label.setText(slider.getValue() + "%");
-        } else {
-            label.setText("" + slider.getValue());
-        }
+        // Displays value of the slider if the slider was moved
+        label.setText(slider.getValue() + suffix);
     }
 }

@@ -22,25 +22,30 @@ public class GraphLayout implements ActionListener {
     double i;
     double r;
     int duration;
+    int delay;
     int seed = 1;
 
-    Calculations calculator;
+    ODESolver calculator;
+    ControlLayout controlLayoutPane;
 
     public GraphLayout() {
         drawComponents();
     }
 
     public void drawComponents() {
+        controlLayoutPane = new ControlLayout(this);
         n = 1000;
         s = n - 1;
         i = n - s;
         r = 0;
+        delay = 0;
 
         sus.add(s);
         inf.add(i);
         rec.add(r);
 
-        chart = new XYChartBuilder().width(600).height(350).title("Area Chart")
+        // Initialized the chart
+        chart = new XYChartBuilder().width(600).height(350).title("SIR Model Graph")
                 .xAxisTitle("Day (s)").yAxisTitle("Number of people").build();
 
         chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
@@ -59,36 +64,66 @@ public class GraphLayout implements ActionListener {
         recoveredSeries.setEnabled(true);
 
         panel = new XChartPanel<>(chart);
-        panel.revalidate();
-        panel.repaint();
+        repaint();
     }
 
     public void addPoints(int pop, int duration) {
-
+        // Initializes variables
         n = pop;
         s = n - 1;
         i = n - s;
         r = 0;
         this.duration = duration;
-        calculator = new Calculations(n, s, i, r, duration, 3);
+        calculator = new ODESolver(n, s, i, r, duration);
 
-        Timer timer = new Timer(1000, this);
-        timer.start();
+        // Loops with a 1 second delay
+        timer = new Timer(1000, this);
     }
 
     @Override
     public void actionPerformed(ActionEvent ev) {
+        // Calculates the new number of infected and recovered
         calculator.calculate(this);
+
+        // Updates the chart
+        chart.updateXYSeries("Susceptible", null, sus, null);
+        chart.updateXYSeries("Infected", null, inf, null);
+        chart.updateXYSeries("Recovered", null, rec, null);
+
+        repaint();
+
+        // Checks if there is no more infected, so it can stop
+        if(calculator.getI() == 0) {
+            if (delay >= 3) {
+                stopSimulation();
+            } else {
+                delay++;
+            }
+        }
+    }
+
+    public void stopSimulation() {
+        timer.stop();
+    }
+
+    public void startSimulation() {
+        timer.start();
+    }
+
+    public void repaint() {
+        panel.revalidate();
+        panel.repaint();
+    }
+
+    public void resetChart() {
+        sus.add(s);
+        inf.add(i);
+        rec.add(r);
 
         chart.updateXYSeries("Susceptible", null, sus, null);
         chart.updateXYSeries("Infected", null, inf, null);
         chart.updateXYSeries("Recovered", null, rec, null);
 
-        panel.revalidate();
-        panel.repaint();
-
-        if(i == 0) {
-            timer.stop();
-        }
+        repaint();
     }
 }

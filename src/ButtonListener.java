@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -5,20 +6,54 @@ public class ButtonListener implements ActionListener {
 
     private ControlLayout controlPane;
     private GraphLayout graphLayout;
+    private JButton button;
 
-    public ButtonListener(ControlLayout controlLayout, GraphLayout graphLayout) {
+    private boolean hasStarted = false;
+    private boolean isSimulating = false;
+
+    public ButtonListener(ControlLayout controlLayout, GraphLayout graphLayout, JButton button) {
         this.controlPane = controlLayout;
         this.graphLayout = graphLayout;
+        this.button = button;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        graphLayout.sus.clear();
-        graphLayout.inf.clear();
-        graphLayout.rec.clear();
+        runFirstTime();
 
-        int duration = Integer.parseInt(controlPane.chosenDuration.getText());
+        //Checks if the use restarted the simulation
+        if (button.getText().equalsIgnoreCase("Reset Simulation")) {
+            graphLayout.sus.clear();
+            graphLayout.inf.clear();
+            graphLayout.rec.clear();
 
-        graphLayout.addPoints(controlPane.densitySlider.getValue(), duration);
+            graphLayout.resetChart();
+            graphLayout.stopSimulation();
+
+            isSimulating = false;
+            hasStarted = false;
+            controlPane.start.setText("Start Simulation");
+        }  else if (isSimulating && !(button.getText().equalsIgnoreCase("Reset Simulation"))) {
+            // TODO: implement a way to stop the simulation here
+            graphLayout.stopSimulation();
+
+            isSimulating = false;
+            controlPane.start.setText("Start Simulation");
+        } else {
+            graphLayout.startSimulation();
+
+            isSimulating = true;
+            controlPane.start.setText("Pause Simulation");
+        }
+    }
+
+    private void runFirstTime() {
+        if (!hasStarted) {
+            int duration = controlPane.durationSlider.getValue();
+            graphLayout.addPoints(controlPane.densitySlider.getValue(), duration);
+
+            controlPane.start.setText("Pause Simulation");
+            hasStarted = true;
+        }
     }
 }
