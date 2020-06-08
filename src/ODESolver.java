@@ -14,13 +14,7 @@ public class ODESolver {
     private double contactRate_PerDay;
     private double transmissionPercentge;
     private double r0;
-
-    private double HANDWASHING_EFFECTIVENESS = 0.55;
-    private double MASK_EFFECTIVENESS = 0.68;
-    private double N95_MASK_EFFECTIVENESS = 0.91;
-    private double GLOVE_EFFECTIVENESS = 0.57;
-    private double GOWN_EFFECTIVENESS = 0.77;
-    private double HAND_MASK_GOWN_EFFECTIVENESS = 0.91;
+    private double probabilityOfInfection;
 
     public ODESolver(double n, double s, double i, double r, double b) {
         this.n = n;
@@ -34,11 +28,16 @@ public class ODESolver {
         transmissionPercentge = 0.6;
         a = contactRate_PerDay * b;
         r0 = 3.5;
-        transmissionPercentge = r0/a;
+        probabilityOfInfection = r0/a;
+        probabilityOfInfection = new ProbabilityWithInterventions(this).calculate();
     }
 
-    public double getI() {
+    public double getInfected() {
         return i;
+    }
+
+    public double getProbabilityOfInfection() {
+        return probabilityOfInfection;
     }
 
     public void calculate(GraphLayout graphLayout) {
@@ -83,7 +82,7 @@ public class ODESolver {
 
 
         // Number of people who will be infected this round
-        double newlyInfected = (transmissionPercentge * s * i)/n;
+        double newlyInfected = (probabilityOfInfection * s * i)/n;
         if(s < newlyInfected) {
             newlyInfected = s;
         }

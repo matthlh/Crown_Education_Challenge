@@ -8,7 +8,7 @@ public class SliderListener implements ChangeListener {
     private JSlider slider;
     private String suffix;
 
-    public SliderListener(JLabel label, JSlider slider, String suffix) {
+    public SliderListener(JLabel label, JSlider slider,String suffix) {
         this.label = label;
         this.slider = slider;
         this.suffix = suffix;

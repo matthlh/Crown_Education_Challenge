@@ -57,10 +57,6 @@ public class GraphLayout implements ActionListener {
         chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Area);
         chart.getStyler().setMarkerSize(0);
 
-        susceptibleSeries.setSmooth(true);
-        infectedSeries.setSmooth(true);
-        recoveredSeries.setSmooth(true);
-
         susceptibleSeries.setFillColor(Color.BLUE);
         infectedSeries.setFillColor(Color.ORANGE);
         recoveredSeries.setFillColor(Color.GRAY);
@@ -104,7 +100,7 @@ public class GraphLayout implements ActionListener {
         repaint();
 
         // Checks if there is no more infected, so it can stop
-        if(Math.round(calculator.getI()) == 0) {
+        if(Math.round(calculator.getInfected()) == 0) {
             if (delay >= 3) {
                 stopSimulation();
             } else {

@@ -52,6 +52,9 @@ public class ButtonListener implements ActionListener {
             int duration = controlPane.durationSlider.getValue();
             graphLayout.addPoints(controlPane.densitySlider.getValue(), duration);
 
+            //TODO: add all the other features
+
+
             controlPane.start.setText("Pause Simulation");
             hasStarted = true;
         }
