@@ -23,9 +23,9 @@ public class ButtonListener implements ActionListener {
 
         //Checks if the use restarted the simulation
         if (button.getText().equalsIgnoreCase("Reset Simulation")) {
-            graphLayout.sus.clear();
-            graphLayout.inf.clear();
-            graphLayout.rec.clear();
+            graphLayout.susceptibleArray.clear();
+            graphLayout.infectedArray.clear();
+            graphLayout.recoveredArray.clear();
 
             graphLayout.resetChart();
             graphLayout.stopSimulation();
@@ -53,6 +53,7 @@ public class ButtonListener implements ActionListener {
             graphLayout.addPoints(controlPane.densitySlider.getValue(), duration);
 
             //TODO: add all the other features
+
 
 
             controlPane.start.setText("Pause Simulation");

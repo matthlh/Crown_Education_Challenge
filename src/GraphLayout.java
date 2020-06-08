@@ -11,21 +11,20 @@ public class GraphLayout implements ActionListener {
 
     XYChart chart;
     JPanel panel;
-    ArrayList<Double> sus = new ArrayList<>();
-    ArrayList<Double> inf = new ArrayList<>();
-    ArrayList<Double> rec = new ArrayList<>();
+    ArrayList<Double> susceptibleArray = new ArrayList<>();
+    ArrayList<Double> infectedArray = new ArrayList<>();
+    ArrayList<Double> recoveredArray = new ArrayList<>();
 
     Timer timer;
 
-    double n;
+    double population;
     double s;
     double i;
     double r;
     int duration;
     int delay;
-    int seed = 1;
 
-    ODESolver calculator;
+    OrdinaryDifferentialEquations calculator;
     ControlLayout controlLayoutPane;
 
     public GraphLayout() {
@@ -34,40 +33,40 @@ public class GraphLayout implements ActionListener {
 
     public void drawComponents() {
         controlLayoutPane = new ControlLayout(this);
-        n = 1000;
-        s = n - 1;
-        i = n - s;
+        population = 1000;
+        s = population - 1;
+        i = population - s;
         r = 0;
         delay = 0;
 
-        sus.add(s);
-        inf.add(i);
-        rec.add(r);
+        susceptibleArray.add(s);
+        infectedArray.add(i);
+        recoveredArray.add(r);
 
         // Initialized the chart
         chart = new XYChartBuilder().width(600).height(350).title("SIR Model Graph")
                 .xAxisTitle("Day (s)").yAxisTitle("Number of people").build();
 
-        XYSeries susceptibleSeries = chart.addSeries("Susceptible", sus);
-        XYSeries infectedSeries = chart.addSeries("Infected", inf);
-        XYSeries recoveredSeries = chart.addSeries("Recovered", rec);
+        XYSeries susceptibleArrayceptibleArraySeries = chart.addSeries("susceptibleArray", susceptibleArray);
+        XYSeries infectedArrayectedArraySeries = chart.addSeries("infectedArray", infectedArray);
+        XYSeries recoveredArrayoveredArraySeries = chart.addSeries("recoveredArray", recoveredArray);
 
         //Puts legend inside graph
 //        chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
         chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Area);
         chart.getStyler().setMarkerSize(0);
 
-        susceptibleSeries.setFillColor(Color.BLUE);
-        infectedSeries.setFillColor(Color.ORANGE);
-        recoveredSeries.setFillColor(Color.GRAY);
+        susceptibleArrayceptibleArraySeries.setFillColor(Color.BLUE);
+        infectedArrayectedArraySeries.setFillColor(Color.ORANGE);
+        recoveredArrayoveredArraySeries.setFillColor(Color.GRAY);
 
-        susceptibleSeries.setLineColor(Color.BLUE);
-        infectedSeries.setLineColor(Color.ORANGE);
-        recoveredSeries.setLineColor(Color.GRAY);
+        susceptibleArrayceptibleArraySeries.setLineColor(Color.BLUE);
+        infectedArrayectedArraySeries.setLineColor(Color.ORANGE);
+        recoveredArrayoveredArraySeries.setLineColor(Color.GRAY);
 
-        susceptibleSeries.setEnabled(true);
-        infectedSeries.setEnabled(true);
-        recoveredSeries.setEnabled(true);
+        susceptibleArrayceptibleArraySeries.setEnabled(true);
+        infectedArrayectedArraySeries.setEnabled(true);
+        recoveredArrayoveredArraySeries.setEnabled(true);
 
         panel = new XChartPanel<>(chart);
 
@@ -76,12 +75,12 @@ public class GraphLayout implements ActionListener {
 
     public void addPoints(int pop, int duration) {
         // Initializes variables
-        n = pop;
-        s = n - 1;
-        i = n - s;
+        population = pop;
+        s = population - 1;
+        i = population - s;
         r = 0;
         this.duration = duration;
-        calculator = new ODESolver(n, s, i, r, duration);
+        calculator = new OrdinaryDifferentialEquations(population, s, i, r, duration);
 
         // Loops with a 1 second delay
         timer = new Timer(1000, this);
@@ -89,18 +88,18 @@ public class GraphLayout implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent ev) {
-        // Calculates the new number of infected and recovered
+        // Calculates the new number of infectedArrayectedArray and recoveredArrayoveredArray
         calculator.calculate(this);
 
         // Updates the chart
-        chart.updateXYSeries("Susceptible", null, sus, null);
-        chart.updateXYSeries("Infected", null, inf, null);
-        chart.updateXYSeries("Recovered", null, rec, null);
+        chart.updateXYSeries("susceptibleArray", null, susceptibleArray, null);
+        chart.updateXYSeries("infectedArray", null, infectedArray, null);
+        chart.updateXYSeries("recoveredArray", null, recoveredArray, null);
 
         repaint();
 
-        // Checks if there is no more infected, so it can stop
-        if(Math.round(calculator.getInfected()) == 0) {
+        // Checks if there is no more infectedArrayectedArray, so it can stop
+        if(Math.round(calculator.getinfectedArrayectedArray()) == 0) {
             if (delay >= 3) {
                 stopSimulation();
             } else {
@@ -123,13 +122,13 @@ public class GraphLayout implements ActionListener {
     }
 
     public void resetChart() {
-        sus.add(s);
-        inf.add(i);
-        rec.add(r);
+        susceptibleArray.add(s);
+        infectedArray.add(i);
+        recoveredArray.add(r);
 
-        chart.updateXYSeries("Susceptible", null, sus, null);
-        chart.updateXYSeries("Infected", null, inf, null);
-        chart.updateXYSeries("Recovered", null, rec, null);
+        chart.updateXYSeries("susceptibleArray", null, susceptibleArray, null);
+        chart.updateXYSeries("infectedArray", null, infectedArray, null);
+        chart.updateXYSeries("recoveredArray", null, recoveredArray, null);
 
         repaint();
     }

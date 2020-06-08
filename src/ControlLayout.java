@@ -2,11 +2,11 @@ import javax.swing.*;
 import java.awt.*;
 
 public class ControlLayout extends JPanel{
-    double socialDistancePCT;
-    double handWashingPCT;
-    double wearingMaskPCT;
-    double wearingGlovePCT;
-    double wearingGownPCT;
+    double socialDistancePercent;
+    double handWashingPercent;
+    double wearingMaskPercent;
+    double wearingGlovePercent;
+    double wearingGownPercent;
 
     JLabel density;
     JSlider densitySlider;
@@ -156,17 +156,17 @@ public class ControlLayout extends JPanel{
         wearingGloveText = wearingGloveText.substring(0, wearingGloveText.length() - 1);
         wearingGownText = wearingGownText.substring(0, wearingGownText.length() - 1);
 
-        double socialDistancePCT = Double.parseDouble(socialDistanceText);
-        double handWashingPCT = Double.parseDouble(handWashingText);
-        double wearingMaskPCT = Double.parseDouble(wearingMaskText);
-        double wearingGlovePCT = Double.parseDouble(wearingGloveText);
-        double wearingGownPCT = Double.parseDouble(wearingGownText);
+        socialDistancePercent = Double.parseDouble(socialDistanceText);
+        handWashingPercent = Double.parseDouble(handWashingText);
+        wearingMaskPercent = Double.parseDouble(wearingMaskText);
+        wearingGlovePercent = Double.parseDouble(wearingGloveText);
+        wearingGownPercent = Double.parseDouble(wearingGownText);
 
         System.out.println(chosenSocialDistance.getText());
         System.out.println("====================");
 
-        double[] allInterventions = {socialDistancePCT, handWashingPCT,
-                wearingMaskPCT, wearingGlovePCT, wearingGownPCT};
+        double[] allInterventions = {socialDistancePercent, handWashingPercent,
+                wearingMaskPercent, wearingGlovePercent, wearingGownPercent};
 
         return allInterventions;
     }

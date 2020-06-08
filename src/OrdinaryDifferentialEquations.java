@@ -1,38 +1,36 @@
 import java.util.LinkedList;
 import java.util.Queue;
 
-public class ODESolver {
-    private ControlLayout controlLayout;
-
-    private double n;
+public class OrdinaryDifferentialEquations {
+    private double population;
     private double s;
     private double i;
     private double r;
     private Queue<Double> dailyInfections;
     private double a;
     private double b;
-    private double contactRate_PerDay;
+    private double contactRatePerDay;
     private double transmissionPercentge;
     private double r0;
     private double probabilityOfInfection;
 
-    public ODESolver(double n, double s, double i, double r, double b) {
-        this.n = n;
+    public OrdinaryDifferentialEquations(double population, double s, double i, double r, double b) {
+        this.population = population;
         this. s = s;
         this.i = i;
         this.r = r;
         this.b = b;
         dailyInfections = new LinkedList<>();
         dailyInfections.add(i);
-        contactRate_PerDay = 0.2945;
+        contactRatePerDay = 0.2945;
         transmissionPercentge = 0.6;
-        a = contactRate_PerDay * b;
+        a = contactRatePerDay * b;
         r0 = 3.5;
         probabilityOfInfection = r0/a;
-        probabilityOfInfection = new ProbabilityWithInterventions(this).calculate();
+        probabilityOfInfection = new ProbabilityWithInterventions(probabilityOfInfection).calculate();
     }
 
-    public double getInfected() {
+    public double getinfectedArrayectedArray() {
         return i;
     }
 
@@ -53,20 +51,20 @@ public class ODESolver {
             It is not a rate over time, but is a
 
 
-        S' = (-a * SI)/n
-        I' = (a * SI)/n - bI
+        S' = (-a * SI)/population
+        I' = (a * SI)/population - bI
         R' = bI
 
 
 
-        int newlyInfected = (a * s * i)/n; force of infection
+        int newlyInfected = (a * s * i)/population; force of infection
         int newlyRecovered = b * i
 
         s -= newlyInfected;
         i += newlyInfected - newlyRecovered;
         r += newlyRecovered;
 
-        a = transmission from infected to susceptible chance
+        a = transmission from Infected to susceptible chance
         b = recovery rate
 
         r0 = a/b --> infection rate / recovery rate
@@ -82,7 +80,7 @@ public class ODESolver {
 
 
         // Number of people who will be infected this round
-        double newlyInfected = (probabilityOfInfection * s * i)/n;
+        double newlyInfected = (probabilityOfInfection * s * i)/population;
         if(s < newlyInfected) {
             newlyInfected = s;
         }
@@ -91,10 +89,10 @@ public class ODESolver {
 
         // Number of people who will be recovered this time period
         double newlyRecovered = i/b;
-//        if(dailyInfections.size() >= b) {
-//            newlyRecovered = (dailyInfections.poll());
+//        if(newlyRecovered.size() >= b) {
+//            newlyRecovered = (newlyRecovered.poll());
 //            if(b == 0) {
-//                newlyInfected = 0;
+//                newlyRecovered = 0;
 //                newlyRecovered = 0;
 //            }
 //        }
@@ -105,20 +103,20 @@ public class ODESolver {
         r += newlyRecovered;
 
         // update the arrays
-        graphLayout.sus.add(s);
-        graphLayout.inf.add(i);
-        graphLayout.rec.add(r);
+        graphLayout.susceptibleArray.add(s);
+        graphLayout.infectedArray.add(i);
+        graphLayout.recoveredArray.add(r);
 
         System.out.println("b: " + b);
         System.out.println("a: " + a);
-        System.out.println("newlyInfected: " + newlyInfected);
-        System.out.println("newlyRecovered: " + newlyRecovered);
-        System.out.println("dailyInfections: " + dailyInfections);
+        System.out.println("newlyinfectedArrayectedArray: " + newlyInfected);
+        System.out.println("newlyrecoveredArrayoveredArray: " + newlyRecovered);
+        System.out.println("dailyinfectedArrayections: " + dailyInfections);
         System.out.println("s: " + s);
         System.out.println("i: " + i);
         System.out.println("r: " + r + "\n");
 
-        if(s + i + r > n) {
+        if(s + i + r > population) {
             System.out.println("THERES AN ERRRRROROROROR");
         }
     }
