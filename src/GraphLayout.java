@@ -1,7 +1,7 @@
 import org.knowm.xchart.*;
-import org.knowm.xchart.style.Styler;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -48,22 +48,33 @@ public class GraphLayout implements ActionListener {
         chart = new XYChartBuilder().width(600).height(350).title("SIR Model Graph")
                 .xAxisTitle("Day (s)").yAxisTitle("Number of people").build();
 
-        chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
-        chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Area);
-
         XYSeries susceptibleSeries = chart.addSeries("Susceptible", sus);
         XYSeries infectedSeries = chart.addSeries("Infected", inf);
         XYSeries recoveredSeries = chart.addSeries("Recovered", rec);
 
+        //Puts legend inside graph
+//        chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
+        chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Area);
+        chart.getStyler().setMarkerSize(0);
+
         susceptibleSeries.setSmooth(true);
         infectedSeries.setSmooth(true);
         recoveredSeries.setSmooth(true);
+
+        susceptibleSeries.setFillColor(Color.BLUE);
+        infectedSeries.setFillColor(Color.ORANGE);
+        recoveredSeries.setFillColor(Color.GRAY);
+
+        susceptibleSeries.setLineColor(Color.BLUE);
+        infectedSeries.setLineColor(Color.ORANGE);
+        recoveredSeries.setLineColor(Color.GRAY);
 
         susceptibleSeries.setEnabled(true);
         infectedSeries.setEnabled(true);
         recoveredSeries.setEnabled(true);
 
         panel = new XChartPanel<>(chart);
+
         repaint();
     }
 
@@ -93,7 +104,7 @@ public class GraphLayout implements ActionListener {
         repaint();
 
         // Checks if there is no more infected, so it can stop
-        if(calculator.getI() == 0) {
+        if(Math.round(calculator.getI()) == 0) {
             if (delay >= 3) {
                 stopSimulation();
             } else {

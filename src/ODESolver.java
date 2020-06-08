@@ -13,6 +13,7 @@ public class ODESolver {
     private double b;
     private double contactRate_PerDay;
     private double transmissionPercentge;
+    private double r0;
 
     private double HANDWASHING_EFFECTIVENESS = 0.55;
     private double MASK_EFFECTIVENESS = 0.68;
@@ -30,8 +31,10 @@ public class ODESolver {
         dailyInfections = new LinkedList<>();
         dailyInfections.add(i);
         contactRate_PerDay = 0.2945;
-        transmissionPercentge = 0.2;
-        a = contactRate_PerDay * transmissionPercentge;
+        transmissionPercentge = 0.6;
+        a = contactRate_PerDay * b;
+        r0 = 3.5;
+        transmissionPercentge = r0/a;
     }
 
     public double getI() {
@@ -39,7 +42,6 @@ public class ODESolver {
     }
 
     public void calculate(GraphLayout graphLayout) {
-
         /*
         SIR disease model without vital dynamics
 
@@ -68,7 +70,7 @@ public class ODESolver {
         a = transmission from infected to susceptible chance
         b = recovery rate
 
-        r0 = a/b --> recovery rate /infection rate
+        r0 = a/b --> infection rate / recovery rate
         a = t * c
         t = probability of infecting if contacted
         c = average rate of contact
@@ -81,22 +83,22 @@ public class ODESolver {
 
 
         // Number of people who will be infected this round
-        double newlyInfected = Math.round((a * s * i)/n);
+        double newlyInfected = (transmissionPercentge * s * i)/n;
         if(s < newlyInfected) {
             newlyInfected = s;
         }
 
-            dailyInfections.add(newlyInfected);
+        dailyInfections.add(newlyInfected);
 
         // Number of people who will be recovered this time period
-        double newlyRecovered = 0.0;
-        if(dailyInfections.size() >= b) {
-            newlyRecovered = Math.round(dailyInfections.poll());
-            if(b == 0) {
-                newlyInfected = 0;
-                newlyRecovered = 0;
-            }
-        }
+        double newlyRecovered = i/b;
+//        if(dailyInfections.size() >= b) {
+//            newlyRecovered = (dailyInfections.poll());
+//            if(b == 0) {
+//                newlyInfected = 0;
+//                newlyRecovered = 0;
+//            }
+//        }
 
         // update the stats
         s -= newlyInfected;
