@@ -26,6 +26,7 @@ public class GraphLayout implements ActionListener {
     ControlLayout controlLayoutPane;
 
     public GraphLayout() {
+        timer = new Timer(1000, this);
         drawComponents();
     }
 
@@ -80,9 +81,6 @@ public class GraphLayout implements ActionListener {
         i = population - s;
         r = 0;
         calculator = new OrdinaryDifferentialEquations(population, s, i, r, duration, interventions, averageContactRate, transmissionProbability);
-
-        // Loops with a 1 second delay
-        timer = new Timer(1000, this);
     }
 
     @Override
@@ -109,10 +107,12 @@ public class GraphLayout implements ActionListener {
 
     public void stopSimulation() {
         timer.stop();
-    }
+        System.out.println("Should stop");
 
+    }
     public void startSimulation() {
         timer.start();
+        System.out.println("Should start");
     }
 
     public void repaint() {
@@ -121,6 +121,10 @@ public class GraphLayout implements ActionListener {
     }
 
     public void resetChart() {
+        susceptibleArray.clear();
+        infectedArray.clear();
+        recoveredArray.clear();
+
         susceptibleArray.add(s);
         infectedArray.add(i);
         recoveredArray.add(r);

@@ -48,7 +48,7 @@ public class ControlLayout extends JPanel{
 
     public ControlLayout(GraphLayout gl) {
         this.graphLayout = gl;
-        setLayout(new GridLayout(10, 3));
+        setLayout(new GridLayout(9, 3));
         setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
         drawComponents();
     }
@@ -90,6 +90,9 @@ public class ControlLayout extends JPanel{
         info = new JButton("More Information");
         start = new JButton("Start Simulation");
         reset = new JButton("Reset Simulation");
+
+        start.setName("Play Button");
+        reset.setName("Reset Button");
 
         // Add tooltips
         population.setToolTipText("http://www.google.com/ Sets the population for the simulation. " +

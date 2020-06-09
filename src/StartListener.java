@@ -22,28 +22,28 @@ public class StartListener implements ActionListener {
         runFirstTime();
 
         //Checks if the use restarted the simulation
-        if (button.getText().equalsIgnoreCase("Reset Simulation")) {
-            graphLayout.susceptibleArray.clear();
-            graphLayout.infectedArray.clear();
-            graphLayout.recoveredArray.clear();
+        if (button.getName().equalsIgnoreCase("Reset Button")) {
+            graphLayout.stopSimulation();
 
             graphLayout.resetChart();
-            graphLayout.stopSimulation();
 
             isSimulating = false;
             hasStarted = false;
             controlPane.start.setText("Start Simulation");
-        }  else if (isSimulating && !(button.getText().equalsIgnoreCase("Reset Simulation"))) {
+            System.out.println("Should reset, BUT IT WONT");
+        }  else if (isSimulating && (button.getName().equalsIgnoreCase("Play Button"))) {
             // TODO: implement a way to stop the simulation here
             graphLayout.stopSimulation();
 
             isSimulating = false;
             controlPane.start.setText("Start Simulation");
+            System.out.println("PAuSE");
         } else {
             graphLayout.startSimulation();
 
             isSimulating = true;
             controlPane.start.setText("Pause Simulation");
+            System.out.println("PLAY");
         }
     }
 
