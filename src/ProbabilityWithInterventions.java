@@ -10,17 +10,13 @@ public class ProbabilityWithInterventions {
     private double handWashingPercent;
     private double maskPercent;
     private double glovePercent;
-    private double gownPercent;
 //    private double N95Pct;
-//    private double handMaskGownPercent;
 
     private double SOCIALDISTANCING_EFFECTIVENESS = 0;
     private double HANDWASHING_EFFECTIVENESS = 0.55;
     private double MASK_EFFECTIVENESS = 0.68;
     private double GLOVE_EFFECTIVENESS = 0.57;
-    private double GOWN_EFFECTIVENESS = 0.77;
 //    private double N95_MASK_EFFECTIVENESS = 0.91;
-//    private double HAND_MASK_GOWN_EFFECTIVENESS = 0.91;
 
     private double probabilityOfInfection;
 
@@ -35,13 +31,11 @@ public class ProbabilityWithInterventions {
         handWashingPercent = allInterventions[1]/100;
         maskPercent = allInterventions[2]/100;
         glovePercent = allInterventions[3]/100;
-        gownPercent = allInterventions[4]/100;
 
         System.out.println(socialDistancingPercent);
         System.out.println(handWashingPercent);
         System.out.println(maskPercent);
         System.out.println(glovePercent);
-        System.out.println(gownPercent);
 
         System.out.println("+================");
     }
@@ -56,8 +50,6 @@ public class ProbabilityWithInterventions {
         System.out.println("Probability After MW: " + probabilityOfInfection);
         probabilityOfInfection *= 1 - (GLOVE_EFFECTIVENESS * glovePercent);
         System.out.println("Probability After GlW: " + probabilityOfInfection);
-        probabilityOfInfection *= 1 - (GOWN_EFFECTIVENESS * gownPercent);
-        System.out.println("Probability After GOW: " + probabilityOfInfection);
 
         System.out.println("============================================");
 

@@ -22,8 +22,13 @@ public class OrdinaryDifferentialEquations {
         this.removalRate = 1/duration;
         this.transmissionProbability = new ProbabilityWithInterventions(transmissionProbability, interventions).calculate();
 
-        this.beta = averageContactRate * transmissionProbability;
-        this.r0 = transmissionProbability / removalRate;
+        this.beta = this.averageContactRate * this.transmissionProbability;
+        System.out.println("BETA: " + beta);
+        System.out.println("averageContactRate: " + this.averageContactRate);
+        System.out.println("transmissionProbability: " + this.transmissionProbability);
+        System.out.println("===============================================");
+
+        this.r0 = beta * duration;
     }
 
     public double getinfected() {

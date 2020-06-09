@@ -35,7 +35,6 @@ public class GraphLayout implements ActionListener {
         s = population - 1;
         i = population - s;
         r = 0;
-        delay = 0;
 
         susceptibleArray.add(s);
         infectedArray.add(i);
@@ -73,6 +72,9 @@ public class GraphLayout implements ActionListener {
 
     public void addPoints(int pop, int duration, double[] interventions, int averageContactRate, double transmissionProbability) {
         // Initializes variables
+        if (pop == 0) {
+            pop  = 1;
+        }
         population = pop;
         s = population - 1;
         i = population - s;

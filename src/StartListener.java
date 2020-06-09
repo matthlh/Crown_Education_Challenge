@@ -2,7 +2,7 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class ButtonListener implements ActionListener {
+public class StartListener implements ActionListener {
 
     private ControlLayout controlPane;
     private GraphLayout graphLayout;
@@ -11,7 +11,7 @@ public class ButtonListener implements ActionListener {
     private boolean hasStarted = false;
     private boolean isSimulating = false;
 
-    public ButtonListener(ControlLayout controlLayout, GraphLayout graphLayout, JButton button) {
+    public StartListener(ControlLayout controlLayout, GraphLayout graphLayout, JButton button) {
         this.controlPane = controlLayout;
         this.graphLayout = graphLayout;
         this.button = button;
@@ -49,13 +49,13 @@ public class ButtonListener implements ActionListener {
 
     private void runFirstTime() {
         if (!hasStarted) {
-            //TODO: add all the other features
+            int population = controlPane.populationSlider.getValue();
+            int duration = controlPane.durationSlider.getValue();
             double[] interventions = controlPane.getInterventions();
             int averageContactRate = controlPane.averageContactRateSlider.getValue();
-            double transmissionProbability = controlPane.transmissionRiskSlider.getValue();
+            double transmissionProbability = controlPane.transmissionRiskSlider.getValue() * 0.01;
 
-            int duration = controlPane.durationSlider.getValue();
-            graphLayout.addPoints(controlPane.populationSlider.getValue(), duration, interventions, averageContactRate, transmissionProbability);
+            graphLayout.addPoints(population, duration, interventions, averageContactRate, transmissionProbability);
 
             controlPane.start.setText("Pause Simulation");
             hasStarted = true;
