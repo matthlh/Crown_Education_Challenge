@@ -24,18 +24,18 @@ public class ProbabilityWithInterventions {
 
     private double probabilityOfInfection;
 
-    public ProbabilityWithInterventions(double probabilityOfInfection) {
+    public ProbabilityWithInterventions(double probabilityOfInfection, double[] interventions) {
         this.probabilityOfInfection = probabilityOfInfection;
 
         graphLayout = new GraphLayout();
         controlLayout = new ControlLayout(graphLayout);
 
-        allInterventions = controlLayout.getInterventions();
-        socialDistancingPercent = allInterventions[0];
-        handWashingPercent = allInterventions[1];
-        maskPercent = allInterventions[2];
-        glovePercent = allInterventions[3];
-        gownPercent = allInterventions[4];
+        this.allInterventions = interventions;
+        socialDistancingPercent = allInterventions[0]/100;
+        handWashingPercent = allInterventions[1]/100;
+        maskPercent = allInterventions[2]/100;
+        glovePercent = allInterventions[3]/100;
+        gownPercent = allInterventions[4]/100;
 
         System.out.println(socialDistancingPercent);
         System.out.println(handWashingPercent);
@@ -47,6 +47,7 @@ public class ProbabilityWithInterventions {
     }
 
     public double calculate() {
+        System.out.println("Probability before everything: " + probabilityOfInfection);
         probabilityOfInfection *= 1 - (SOCIALDISTANCING_EFFECTIVENESS * socialDistancingPercent);
         System.out.println("Probability After SD: " + probabilityOfInfection);
         probabilityOfInfection *= 1 - (HANDWASHING_EFFECTIVENESS * handWashingPercent);

@@ -8,13 +8,21 @@ public class ControlLayout extends JPanel{
     double wearingGlovePercent;
     double wearingGownPercent;
 
-    JLabel density;
-    JSlider densitySlider;
-    JLabel chosenDensity;
+    JLabel population;
+    JSlider populationSlider;
+    JLabel chosenPopulation;
 
     JLabel duration;
     JSlider durationSlider;
     JLabel chosenDuration;
+
+    JLabel transmissionRisk;
+    JSlider transmissionRiskSlider;
+    JLabel chosenTransmissionRisk;
+
+    JLabel averageContactRate;
+    JSlider averageContactRateSlider;
+    JLabel chosenAverageContactRate;
 
     JLabel socialDistance;
     JSlider socialDistanceSlider;
@@ -43,19 +51,27 @@ public class ControlLayout extends JPanel{
 
     public ControlLayout(GraphLayout gl) {
         this.graphLayout = gl;
-        setLayout(new GridLayout(8, 3));
+        setLayout(new GridLayout(10, 3));
         setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
         drawComponents();
     }
 
     public void drawComponents() {
-        density = new JLabel("Population Size:");
-        densitySlider = new JSlider(0, 10000);
-        chosenDensity = new JLabel("1000 People", SwingConstants.CENTER);
+        population = new JLabel("Population Size:");
+        populationSlider = new JSlider(0, 10000);
+        chosenPopulation = new JLabel("1000 People", SwingConstants.CENTER);
 
         duration = new JLabel("Disease Duration (Days):");
         durationSlider = new JSlider(0, 50);
         chosenDuration = new JLabel("10 Days", SwingConstants.CENTER);
+
+        transmissionRisk = new JLabel("Probability of Transmission:");
+        transmissionRiskSlider = new JSlider(0, 100);
+        chosenTransmissionRisk = new JLabel("40%", SwingConstants.CENTER);
+
+        averageContactRate = new JLabel("Average Rate of Contact:");
+        averageContactRateSlider = new JSlider(1, 50);
+        chosenAverageContactRate = new JLabel("12 People", SwingConstants.CENTER);
 
         socialDistance = new JLabel("Percentage of People Social Distancing:");
         socialDistanceSlider = new JSlider(0, 100);
@@ -80,17 +96,20 @@ public class ControlLayout extends JPanel{
         start = new JButton("Start Simulation");
         reset = new JButton("Reset Simulation");
 
-        setFactorSettings(densitySlider, 1000, 2000, 100);
+        setFactorSettings(populationSlider, 1000, 2000, 100);
         setFactorSettings(durationSlider, 10, 10, 1);
+        setFactorSettings(transmissionRiskSlider, 40, 10, 1);
+        setFactorSettings(averageContactRateSlider, 12, 10, 1);
         setFactorSettings(socialDistanceSlider, 0, 10, 1);
         setFactorSettings(handWashingSlider, 0, 10, 1);
         setFactorSettings(wearingMaskSlider, 0, 10, 1);
         setFactorSettings(wearingGloveSlider, 0, 10, 1);
         setFactorSettings(wearingGownSlider, 0, 10, 1);
 
-        densitySlider.addChangeListener(new SliderListener(chosenDensity, densitySlider, " People"));
+        populationSlider.addChangeListener(new SliderListener(chosenPopulation, populationSlider, " People"));
         durationSlider.addChangeListener(new SliderListener(chosenDuration, durationSlider, " Days"));
-
+        averageContactRateSlider.addChangeListener(new SliderListener(chosenAverageContactRate, averageContactRateSlider, " People"));
+        transmissionRiskSlider.addChangeListener(new SliderListener(chosenTransmissionRisk, transmissionRiskSlider, "%"));
         socialDistanceSlider.addChangeListener(new SliderListener(chosenSocialDistance, socialDistanceSlider, "%"));
         handWashingSlider.addChangeListener(new SliderListener(chosenHandWashing, handWashingSlider, "%"));
         wearingMaskSlider.addChangeListener(new SliderListener(chosenWearingMask, wearingMaskSlider, "%"));
@@ -100,13 +119,21 @@ public class ControlLayout extends JPanel{
         start.addActionListener(new ButtonListener(this, graphLayout, start));
         reset.addActionListener(new ButtonListener(this, graphLayout, reset));
 
-        add(density);
-        add(densitySlider);
-        add(chosenDensity);
+        add(population);
+        add(populationSlider);
+        add(chosenPopulation);
 
         add(duration);
         add(durationSlider);
         add(chosenDuration);
+
+        add(transmissionRisk);
+        add(transmissionRiskSlider);
+        add(chosenTransmissionRisk);
+
+        add(averageContactRate);
+        add(averageContactRateSlider);
+        add(chosenAverageContactRate);
 
         add(socialDistance);
         add(socialDistanceSlider);
@@ -144,26 +171,11 @@ public class ControlLayout extends JPanel{
     }
 
     public double[] getInterventions() {
-        String socialDistanceText = chosenSocialDistance.getText();
-        String handWashingText = chosenSocialDistance.getText();
-        String wearingMaskText = chosenSocialDistance.getText();
-        String wearingGloveText = chosenSocialDistance.getText();
-        String wearingGownText = chosenSocialDistance.getText();
-
-        socialDistanceText = socialDistanceText.substring(0, socialDistanceText.length() - 1);
-        handWashingText = handWashingText.substring(0, handWashingText.length() - 1);
-        wearingMaskText = wearingMaskText.substring(0, wearingMaskText.length() - 1);
-        wearingGloveText = wearingGloveText.substring(0, wearingGloveText.length() - 1);
-        wearingGownText = wearingGownText.substring(0, wearingGownText.length() - 1);
-
-        socialDistancePercent = Double.parseDouble(socialDistanceText);
-        handWashingPercent = Double.parseDouble(handWashingText);
-        wearingMaskPercent = Double.parseDouble(wearingMaskText);
-        wearingGlovePercent = Double.parseDouble(wearingGloveText);
-        wearingGownPercent = Double.parseDouble(wearingGownText);
-
-        System.out.println(chosenSocialDistance.getText());
-        System.out.println("====================");
+        socialDistancePercent = socialDistanceSlider.getValue();
+        handWashingPercent = handWashingSlider.getValue();
+        wearingMaskPercent = wearingMaskSlider.getValue();
+        wearingGlovePercent = wearingGloveSlider.getValue();
+        wearingGownPercent = wearingGownSlider.getValue();
 
         double[] allInterventions = {socialDistancePercent, handWashingPercent,
                 wearingMaskPercent, wearingGlovePercent, wearingGownPercent};

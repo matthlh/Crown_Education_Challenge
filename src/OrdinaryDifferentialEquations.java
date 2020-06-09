@@ -1,41 +1,33 @@
-import java.util.LinkedList;
-import java.util.Queue;
-
 public class OrdinaryDifferentialEquations {
     private double population;
     private double s;
     private double i;
     private double r;
-    private Queue<Double> dailyInfections;
-    private double a;
-    private double b;
-    private double contactRatePerDay;
-    private double transmissionPercentge;
+    private double duration;
     private double r0;
-    private double probabilityOfInfection;
+    private double transmissionProbability;
+    private int averageContactRate;
+    private double removalRate;
+    private double beta;
 
-    public OrdinaryDifferentialEquations(double population, double s, double i, double r, double b) {
+    public OrdinaryDifferentialEquations(double population, double s, double i, double r, double duration, double[] interventions, int averageContactRate, double transmissionProbability) {
         this.population = population;
         this. s = s;
         this.i = i;
         this.r = r;
-        this.b = b;
-        dailyInfections = new LinkedList<>();
-        dailyInfections.add(i);
-        contactRatePerDay = 0.2945;
-        transmissionPercentge = 0.6;
-        a = contactRatePerDay * b;
-        r0 = 3.5;
-        probabilityOfInfection = r0/a;
-        probabilityOfInfection = new ProbabilityWithInterventions(probabilityOfInfection).calculate();
+        this.duration = duration;
+        this.averageContactRate = averageContactRate;
+        this.transmissionProbability = transmissionProbability;
+
+        this.removalRate = 1/duration;
+        this.transmissionProbability = new ProbabilityWithInterventions(transmissionProbability, interventions).calculate();
+
+        this.beta = averageContactRate * transmissionProbability;
+        this.r0 = transmissionProbability / removalRate;
     }
 
-    public double getinfectedArrayectedArray() {
+    public double getinfected() {
         return i;
-    }
-
-    public double getProbabilityOfInfection() {
-        return probabilityOfInfection;
     }
 
     public void calculate(GraphLayout graphLayout) {
@@ -58,20 +50,20 @@ public class OrdinaryDifferentialEquations {
 
 
         int newlyInfected = (a * s * i)/population; force of infection
-        int newlyRecovered = b * i
+        int newlyRecovered = duration * i
 
         s -= newlyInfected;
         i += newlyInfected - newlyRecovered;
         r += newlyRecovered;
 
         a = transmission from Infected to susceptible chance
-        b = recovery rate
+        duration = recovery rate
 
-        r0 = a/b --> infection rate / recovery rate
+        r0 = a/duration --> infection rate / recovery rate
         a = t * c
         t = probability of infecting if contacted
         c = average rate of contact
-        v = 1/b = infection length
+        v = 1/duration = infection length
 
         r0 = t * c * v
 
@@ -80,26 +72,18 @@ public class OrdinaryDifferentialEquations {
 
 
         // Number of people who will be infected this round
-        double newlyInfected = (probabilityOfInfection * s * i)/population;
+        double newlyInfected = ((beta * s * i)/population);
         if(s < newlyInfected) {
             newlyInfected = s;
         }
 
-        dailyInfections.add(newlyInfected);
-
         // Number of people who will be recovered this time period
-        double newlyRecovered = i/b;
-//        if(newlyRecovered.size() >= b) {
-//            newlyRecovered = (newlyRecovered.poll());
-//            if(b == 0) {
-//                newlyRecovered = 0;
-//                newlyRecovered = 0;
-//            }
-//        }
+        double newlyRecovered = (removalRate * i);
 
         // update the stats
         s -= newlyInfected;
-        i += newlyInfected - newlyRecovered;
+        i += newlyInfected;
+        i -= newlyRecovered;
         r += newlyRecovered;
 
         // update the arrays
@@ -107,16 +91,17 @@ public class OrdinaryDifferentialEquations {
         graphLayout.infectedArray.add(i);
         graphLayout.recoveredArray.add(r);
 
-        System.out.println("b: " + b);
-        System.out.println("a: " + a);
-        System.out.println("newlyinfectedArrayectedArray: " + newlyInfected);
-        System.out.println("newlyrecoveredArrayoveredArray: " + newlyRecovered);
-        System.out.println("dailyinfectedArrayections: " + dailyInfections);
+        System.out.println("duration: " + duration);
+        System.out.println("transmissionProbability: " + transmissionProbability);
+        System.out.println("newlyinfected: " + newlyInfected);
+        System.out.println("newlyrecovered: " + newlyRecovered);
         System.out.println("s: " + s);
         System.out.println("i: " + i);
         System.out.println("r: " + r + "\n");
 
-        if(s + i + r > population) {
+        System.out.println("R0: " + r0 + "\n");
+
+        if(s + i + r != population) {
             System.out.println("THERES AN ERRRRROROROROR");
         }
     }

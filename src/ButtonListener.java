@@ -49,12 +49,13 @@ public class ButtonListener implements ActionListener {
 
     private void runFirstTime() {
         if (!hasStarted) {
-            int duration = controlPane.durationSlider.getValue();
-            graphLayout.addPoints(controlPane.densitySlider.getValue(), duration);
-
             //TODO: add all the other features
+            double[] interventions = controlPane.getInterventions();
+            int averageContactRate = controlPane.averageContactRateSlider.getValue();
+            double transmissionProbability = controlPane.transmissionRiskSlider.getValue();
 
-
+            int duration = controlPane.durationSlider.getValue();
+            graphLayout.addPoints(controlPane.populationSlider.getValue(), duration, interventions, averageContactRate, transmissionProbability);
 
             controlPane.start.setText("Pause Simulation");
             hasStarted = true;
