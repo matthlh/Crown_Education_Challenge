@@ -6,34 +6,38 @@ public class StartListener implements ActionListener {
 
     private ControlLayout controlPane;
     private GraphLayout graphLayout;
-    private JButton button;
 
     private boolean hasStarted = false;
     private boolean isSimulating = false;
 
-    public StartListener(ControlLayout controlLayout, GraphLayout graphLayout, JButton button) {
+    public StartListener(ControlLayout controlLayout, GraphLayout graphLayout) {
         this.controlPane = controlLayout;
         this.graphLayout = graphLayout;
-        this.button = button;
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        runFirstTime();
-
-        //Checks if the use restarted the simulation
+        JButton button = (JButton)e.getSource();
         if (button.getName().equalsIgnoreCase("Reset Button")) {
             graphLayout.stopSimulation();
 
             graphLayout.resetChart();
 
             controlPane.start.setText("Start Simulation");
-        }  else if (isSimulating && (button.getName().equalsIgnoreCase("Play Button"))) {
+            isSimulating = false;
+            hasStarted = false;
+            return;
+        }
+
+        runFirstTime();
+
+        //Checks if the use restarted the simulation
+        if (isSimulating && (button.getName().equalsIgnoreCase("Play Button"))) {
             graphLayout.stopSimulation();
 
             isSimulating = false;
             controlPane.start.setText("Start Simulation");
-        } else {
+        } else if(button.getName().equalsIgnoreCase("Play Button")) {
             graphLayout.startSimulation();
 
             isSimulating = true;

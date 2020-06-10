@@ -4,7 +4,8 @@ import java.net.URI;
 
 public class ControlLayout extends JPanel{
     GraphLayout graphLayout;
-    InformationButtonListener infoListener = new InformationButtonListener();
+    InformationButtonListener infoListener;
+    StartListener startListener;
 
     double socialDistancePercent;
     double handWashingPercent;
@@ -49,6 +50,8 @@ public class ControlLayout extends JPanel{
 
     public ControlLayout(GraphLayout gl) {
         this.graphLayout = gl;
+        startListener = new StartListener(this, graphLayout);
+        infoListener = new InformationButtonListener();
         setLayout(new GridLayout(9, 3));
         setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
         drawComponents();
@@ -62,15 +65,15 @@ public class ControlLayout extends JPanel{
 
         duration = new JButton("Disease Duration (Days)");
         durationSlider = new JSlider(0, 50);
-        chosenDuration = new JLabel("10 Days", SwingConstants.CENTER);
+        chosenDuration = new JLabel("20 Days", SwingConstants.CENTER);
 
         transmissionRisk = new JButton("Probability of Transmission");
         transmissionRiskSlider = new JSlider(0, 100);
-        chosenTransmissionRisk = new JLabel("40%", SwingConstants.CENTER);
+        chosenTransmissionRisk = new JLabel("10%", SwingConstants.CENTER);
 
         averageContactRate = new JButton("Average Rate of Contact");
         averageContactRateSlider = new JSlider(0, 50);
-        chosenAverageContactRate = new JLabel("12 People", SwingConstants.CENTER);
+        chosenAverageContactRate = new JLabel("8 People", SwingConstants.CENTER);
 
         socialDistance = new JButton("<html>Percentage of People Social Distancing: " +
                 "<a href=\'https://www.google.com/\'>Click Here!</a></html>");
@@ -153,8 +156,8 @@ public class ControlLayout extends JPanel{
 
         // Sets the limits and ticks for the sliders
         setFactorSettings(populationSlider, 1000, 2000, 100);
-        setFactorSettings(durationSlider, 10, 10, 1);
-        setFactorSettings(transmissionRiskSlider, 20, 10, 1);
+        setFactorSettings(durationSlider, 20, 10, 1);
+        setFactorSettings(transmissionRiskSlider, 10, 10, 1);
         setFactorSettings(averageContactRateSlider, 8, 10, 1);
         setFactorSettings(socialDistanceSlider, 0, 10, 1);
         setFactorSettings(handWashingSlider, 0, 10, 1);
@@ -173,8 +176,8 @@ public class ControlLayout extends JPanel{
 
         // Add ActionListener to each button
         info.addActionListener(infoListener);
-        start.addActionListener(new StartListener(this, graphLayout, start));
-        reset.addActionListener(new StartListener(this, graphLayout, reset));
+        start.addActionListener(startListener);
+        reset.addActionListener(startListener);
 
         // Adds all the components to the JPanel
         add(population);

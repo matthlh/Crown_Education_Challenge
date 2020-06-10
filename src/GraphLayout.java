@@ -76,10 +76,19 @@ public class GraphLayout implements ActionListener {
         if (pop == 0) {
             pop  = 1;
         }
+        delay = 3;
         population = pop;
         s = population - 1;
         i = population - s;
         r = 0;
+
+        System.out.println("duration: " + duration);
+        System.out.println("transmissionProbability: " + transmissionProbability);
+        System.out.println("s: " + s);
+        System.out.println("i: " + i);
+        System.out.println("r: " + r + "\n");
+        System.out.println("AWOIHDOAIWHDOIAWH");
+
         calculator = new OrdinaryDifferentialEquations(population, s, i, r, duration, interventions, averageContactRate, transmissionProbability);
     }
 

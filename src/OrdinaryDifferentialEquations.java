@@ -26,6 +26,7 @@ public class OrdinaryDifferentialEquations {
         System.out.println("BETA: " + beta);
         System.out.println("averageContactRate: " + this.averageContactRate);
         System.out.println("transmissionProbability: " + this.transmissionProbability);
+        System.out.println("recover Rate: " + this.removalRate);
         System.out.println("===============================================");
 
         this.r0 = beta * duration;
@@ -73,6 +74,8 @@ public class OrdinaryDifferentialEquations {
         r0 = t * c * v
 
         I am using forward euler method or forward euler integration to solve
+
+        My model is consideredd deterministic
         */
 
 
