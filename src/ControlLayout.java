@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.net.URI;
 
 public class ControlLayout extends JPanel{
     GraphLayout graphLayout;
@@ -55,35 +56,36 @@ public class ControlLayout extends JPanel{
 
     public void drawComponents() {
         // Initializes all the components
-        population = new JButton("Population Size:");
+        population = new JButton("Population Size");
         populationSlider = new JSlider(0, 10000);
         chosenPopulation = new JLabel("1000 People", SwingConstants.CENTER);
 
-        duration = new JButton("Disease Duration (Days):");
+        duration = new JButton("Disease Duration (Days)");
         durationSlider = new JSlider(0, 50);
         chosenDuration = new JLabel("10 Days", SwingConstants.CENTER);
 
-        transmissionRisk = new JButton("Probability of Transmission:");
+        transmissionRisk = new JButton("Probability of Transmission");
         transmissionRiskSlider = new JSlider(0, 100);
         chosenTransmissionRisk = new JLabel("40%", SwingConstants.CENTER);
 
-        averageContactRate = new JButton("Average Rate of Contact:");
+        averageContactRate = new JButton("Average Rate of Contact");
         averageContactRateSlider = new JSlider(0, 50);
         chosenAverageContactRate = new JLabel("12 People", SwingConstants.CENTER);
 
-        socialDistance = new JButton("Percentage of People Social Distancing:");
+        socialDistance = new JButton("<html>Percentage of People Social Distancing: " +
+                "<a href=\'https://www.google.com/\'>Click Here!</a></html>");
         socialDistanceSlider = new JSlider(0, 100);
         chosenSocialDistance = new JLabel("0%", SwingConstants.CENTER);
 
-        handWashing = new JButton("Percentage of People Washing Hands:");
+        handWashing = new JButton("Percentage of People Washing Hands");
         handWashingSlider = new JSlider(0, 100);
         chosenHandWashing = new JLabel("0%", SwingConstants.CENTER);
 
-        wearingMask = new JButton("Percentage of People Wearing Masks:");
+        wearingMask = new JButton("Percentage of People Wearing Masks");
         wearingMaskSlider = new JSlider(0, 100);
         chosenWearingMask = new JLabel("0%", SwingConstants.CENTER);
 
-        wearingGlove = new JButton("Percentage of People Wearing Gloves:");
+        wearingGlove = new JButton("Percentage of People Wearing Gloves");
         wearingGloveSlider = new JSlider(0, 100);
         chosenWearingGlove = new JLabel("0%", SwingConstants.CENTER);
 
@@ -95,7 +97,7 @@ public class ControlLayout extends JPanel{
         reset.setName("Reset Button");
 
         // Add tooltips
-        population.setToolTipText("http://www.google.com/ Sets the population for the simulation. " +
+        population.setToolTipText("Sets the population for the simulation. " +
                 "Click for More!");
         duration.setToolTipText("Sets the disease  duration. " +
                 "Click for More!");
@@ -105,13 +107,49 @@ public class ControlLayout extends JPanel{
                 "Click for More!");
         socialDistance.setToolTipText("Sets the percentage of people social distancing. " +
                 "Click for More!");
+        handWashing.setToolTipText("Sets the percentage of people who washes their hands frequently. " +
+                "Click for More!");
         wearingMask.setToolTipText("Sets the percentage of people wearing a mask. " +
                 "Click for More!");
         wearingGlove.setToolTipText("Sets the percentage of people wearing a glove. " +
                 "Click for More!");
 
-        // Changed Button design
-        population.setOpaque(true);
+        population.setBorderPainted(false);
+        population.setOpaque(false);
+
+        duration.setBorderPainted(false);
+        duration.setOpaque(false);
+
+        transmissionRisk.setBorderPainted(false);
+        transmissionRisk.setOpaque(false);
+
+        averageContactRate.setBorderPainted(false);
+        averageContactRate.setOpaque(false);
+
+        socialDistance.setBorderPainted(false);
+        socialDistance.setOpaque(false);
+
+        handWashing.setBorderPainted(false);
+        handWashing.setOpaque(false);
+
+        wearingMask.setBorderPainted(false);
+        wearingMask.setOpaque(false);
+
+        wearingGlove.setBorderPainted(false);
+        wearingGlove.setOpaque(false);
+
+        try {
+            population.addActionListener(new HTTPListener(new URI("https://www.google.com/")));
+            duration.addActionListener(new HTTPListener(new URI("https://www.google.com/")));
+            transmissionRisk.addActionListener(new HTTPListener(new URI("https://www.google.com/")));
+            averageContactRate.addActionListener(new HTTPListener(new URI("https://www.google.com/")));
+            socialDistance.addActionListener(new HTTPListener(new URI("https://www.google.com/")));
+            handWashing.addActionListener(new HTTPListener(new URI("https://www.google.com/")));
+            wearingMask.addActionListener(new HTTPListener(new URI("https://www.google.com/")));
+            wearingGlove.addActionListener(new HTTPListener(new URI("https://www.google.com/")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
         // Sets the limits and ticks for the sliders
         setFactorSettings(populationSlider, 1000, 2000, 100);

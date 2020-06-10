@@ -107,12 +107,10 @@ public class GraphLayout implements ActionListener {
 
     public void stopSimulation() {
         timer.stop();
-        System.out.println("Should stop");
 
     }
     public void startSimulation() {
         timer.start();
-        System.out.println("Should start");
     }
 
     public void repaint() {

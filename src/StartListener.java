@@ -27,23 +27,17 @@ public class StartListener implements ActionListener {
 
             graphLayout.resetChart();
 
-            isSimulating = false;
-            hasStarted = false;
             controlPane.start.setText("Start Simulation");
-            System.out.println("Should reset, BUT IT WONT");
         }  else if (isSimulating && (button.getName().equalsIgnoreCase("Play Button"))) {
-            // TODO: implement a way to stop the simulation here
             graphLayout.stopSimulation();
 
             isSimulating = false;
             controlPane.start.setText("Start Simulation");
-            System.out.println("PAuSE");
         } else {
             graphLayout.startSimulation();
 
             isSimulating = true;
             controlPane.start.setText("Pause Simulation");
-            System.out.println("PLAY");
         }
     }
 
@@ -59,6 +53,9 @@ public class StartListener implements ActionListener {
 
             controlPane.start.setText("Pause Simulation");
             hasStarted = true;
+
+            graphLayout.startSimulation();
+            System.out.println("TESTT");
         }
     }
 }
