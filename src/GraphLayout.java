@@ -26,7 +26,7 @@ public class GraphLayout implements ActionListener {
     ControlLayout controlLayoutPane;
 
     public GraphLayout() {
-        timer = new Timer(1000, this);
+        timer = new Timer(500, this);
         drawComponents();
     }
 
@@ -74,7 +74,10 @@ public class GraphLayout implements ActionListener {
     public void addPoints(int pop, int duration, double[] interventions, int averageContactRate, double transmissionProbability) {
         // Initializes variables
         if (pop == 0) {
-            pop  = 1;
+            pop = 1;
+        }
+        if(duration == 0) {
+            duration = 1;
         }
         delay = 3;
         population = pop;
@@ -120,6 +123,10 @@ public class GraphLayout implements ActionListener {
     }
     public void startSimulation() {
         timer.start();
+    }
+
+    public void changeTimerDelay(int milliseconds) {
+        timer.setDelay(milliseconds);
     }
 
     public void repaint() {

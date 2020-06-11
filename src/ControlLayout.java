@@ -12,6 +12,10 @@ public class ControlLayout extends JPanel{
     double wearingMaskPercent;
     double wearingGlovePercent;
 
+    JButton normalSpeed;
+    JButton doubleSpeed;
+    JButton x1000Speed;
+
     JButton population;
     JSlider populationSlider;
     JLabel chosenPopulation;
@@ -52,13 +56,17 @@ public class ControlLayout extends JPanel{
         this.graphLayout = gl;
         startListener = new StartListener(this, graphLayout);
         infoListener = new InformationButtonListener();
-        setLayout(new GridLayout(9, 3));
+        setLayout(new GridLayout(10, 3));
         setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
         drawComponents();
     }
 
     public void drawComponents() {
         // Initializes all the components
+        normalSpeed = new JButton("Normal Speed");
+        doubleSpeed = new JButton("x2 Speed");
+        x1000Speed = new JButton("x1000 Speed");
+
         population = new JButton("Population Size");
         populationSlider = new JSlider(0, 10000);
         chosenPopulation = new JLabel("1000 People", SwingConstants.CENTER);
@@ -76,7 +84,7 @@ public class ControlLayout extends JPanel{
         chosenAverageContactRate = new JLabel("8 People", SwingConstants.CENTER);
 
         socialDistance = new JButton("<html>Percentage of People Social Distancing: " +
-                "<a href=\'https://www.google.com/\'>Click Here!</a></html>");
+                "<a href=>Click Here!</a></html>");
         socialDistanceSlider = new JSlider(0, 100);
         chosenSocialDistance = new JLabel("0%", SwingConstants.CENTER);
 
@@ -142,14 +150,18 @@ public class ControlLayout extends JPanel{
         wearingGlove.setOpaque(false);
 
         try {
-            population.addActionListener(new HTTPListener(new URI("https://www.google.com/")));
-            duration.addActionListener(new HTTPListener(new URI("https://www.google.com/")));
-            transmissionRisk.addActionListener(new HTTPListener(new URI("https://www.google.com/")));
-            averageContactRate.addActionListener(new HTTPListener(new URI("https://www.google.com/")));
-            socialDistance.addActionListener(new HTTPListener(new URI("https://www.google.com/")));
-            handWashing.addActionListener(new HTTPListener(new URI("https://www.google.com/")));
-            wearingMask.addActionListener(new HTTPListener(new URI("https://www.google.com/")));
-            wearingGlove.addActionListener(new HTTPListener(new URI("https://www.google.com/")));
+//            population.addActionListener(new HTTPListener(new URI("https://www.google.com/")));
+//            duration.addActionListener(new HTTPListener(new URI("https://www.google.com/")));
+//            transmissionRisk.addActionListener(new HTTPListener(new URI("https://www.google.com/")));
+//            averageContactRate.addActionListener(new HTTPListener(new URI("https://www.google.com/")));
+            socialDistance.addActionListener(new HTTPListener
+                    (new URI("https://www.google.com/")));
+            handWashing.addActionListener(new HTTPListener
+                    (new URI("https://www.imperial.ac.uk/media/imperial-college/medicine/sph/ide/gida-fellowships/Imperial-College-COVID19-NPI-modelling-16-03-2020.pdf")));
+            wearingMask.addActionListener(new HTTPListener
+                    (new URI("https://www.imperial.ac.uk/media/imperial-college/medicine/sph/ide/gida-fellowships/Imperial-College-COVID19-NPI-modelling-16-03-2020.pdf")));
+            wearingGlove.addActionListener(new HTTPListener
+                    (new URI("https://www.imperial.ac.uk/media/imperial-college/medicine/sph/ide/gida-fellowships/Imperial-College-COVID19-NPI-modelling-16-03-2020.pdf")));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -163,6 +175,11 @@ public class ControlLayout extends JPanel{
         setFactorSettings(handWashingSlider, 0, 10, 1);
         setFactorSettings(wearingMaskSlider, 0, 10, 1);
         setFactorSettings(wearingGloveSlider, 0, 10, 1);
+
+        // Add ActionListener to speed buttons
+        normalSpeed.addActionListener(new SpeedButtonListener(1000, graphLayout));
+        doubleSpeed.addActionListener(new SpeedButtonListener(500, graphLayout));
+        x1000Speed.addActionListener(new SpeedButtonListener(0, graphLayout));
 
         // Adds ActionListener to each Slider
         populationSlider.addChangeListener(new SliderListener(chosenPopulation, populationSlider, " People"));
@@ -180,6 +197,10 @@ public class ControlLayout extends JPanel{
         reset.addActionListener(startListener);
 
         // Adds all the components to the JPanel
+        add(normalSpeed);
+        add(doubleSpeed);
+        add(x1000Speed);
+
         add(population);
         add(populationSlider);
         add(chosenPopulation);

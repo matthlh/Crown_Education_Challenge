@@ -106,11 +106,8 @@ public class OrdinaryDifferentialEquations {
         System.out.println("s: " + s);
         System.out.println("i: " + i);
         System.out.println("r: " + r + "\n");
+        System.out.println("Total: " + (s + i + r));
 
         System.out.println("R0: " + r0 + "\n");
-
-        if(s + i + r != population) {
-            System.out.println("THERES AN ERRRRROROROROR");
-        }
     }
 }

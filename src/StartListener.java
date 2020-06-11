@@ -58,8 +58,8 @@ public class StartListener implements ActionListener {
             controlPane.start.setText("Pause Simulation");
             hasStarted = true;
 
+            graphLayout.changeTimerDelay(1000);
             graphLayout.startSimulation();
-            System.out.println("TESTT");
         }
     }
 }
