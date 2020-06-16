@@ -83,8 +83,7 @@ public class ControlLayout extends JPanel{
         averageContactRateSlider = new JSlider(0, 50);
         chosenAverageContactRate = new JLabel("8 People", SwingConstants.CENTER);
 
-        socialDistance = new JButton("<html>Percentage of People Social Distancing: " +
-                "<a href=>Click Here!</a></html>");
+        socialDistance = new JButton("<html>Percentage of People Social Distancing: ");
         socialDistanceSlider = new JSlider(0, 100);
         chosenSocialDistance = new JLabel("0%", SwingConstants.CENTER);
 
@@ -155,13 +154,13 @@ public class ControlLayout extends JPanel{
 //            transmissionRisk.addActionListener(new HTTPListener(new URI("https://www.google.com/")));
 //            averageContactRate.addActionListener(new HTTPListener(new URI("https://www.google.com/")));
             socialDistance.addActionListener(new HTTPListener
-                    (new URI("https://www.google.com/")));
+                    (new URI("https://www.medrxiv.org/content/10.1101/2020.04.16.20068403v1")));
             handWashing.addActionListener(new HTTPListener
-                    (new URI("https://www.imperial.ac.uk/media/imperial-college/medicine/sph/ide/gida-fellowships/Imperial-College-COVID19-NPI-modelling-16-03-2020.pdf")));
+                    (new URI("https://www.bmj.com/content/336/7635/77.short")));
             wearingMask.addActionListener(new HTTPListener
-                    (new URI("https://www.imperial.ac.uk/media/imperial-college/medicine/sph/ide/gida-fellowships/Imperial-College-COVID19-NPI-modelling-16-03-2020.pdf")));
+                    (new URI("https://www.bmj.com/content/336/7635/77.short")));
             wearingGlove.addActionListener(new HTTPListener
-                    (new URI("https://www.imperial.ac.uk/media/imperial-college/medicine/sph/ide/gida-fellowships/Imperial-College-COVID19-NPI-modelling-16-03-2020.pdf")));
+                    (new URI("https://www.bmj.com/content/336/7635/77.short")));
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -179,7 +178,7 @@ public class ControlLayout extends JPanel{
         // Add ActionListener to speed buttons
         normalSpeed.addActionListener(new SpeedButtonListener(1000, graphLayout));
         doubleSpeed.addActionListener(new SpeedButtonListener(500, graphLayout));
-        x1000Speed.addActionListener(new SpeedButtonListener(0, graphLayout));
+        x1000Speed.addActionListener(new SpeedButtonListener(1, graphLayout));
 
         // Adds ActionListener to each Slider
         populationSlider.addChangeListener(new SliderListener(chosenPopulation, populationSlider, " People"));

@@ -53,7 +53,7 @@ public class GraphLayout implements ActionListener {
 //        chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
         chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Area);
         chart.getStyler().setMarkerSize(0);
-//
+
 //        susceptibleSeries.setFillColor(Color.BLUE);
 //        infectedSeries.setFillColor(Color.ORANGE);
 //        recoveredSeries.setFillColor(Color.GRAY);
@@ -138,10 +138,6 @@ public class GraphLayout implements ActionListener {
         susceptibleArray.clear();
         infectedArray.clear();
         recoveredArray.clear();
-
-        susceptibleArray.add(s);
-        infectedArray.add(i);
-        recoveredArray.add(r);
 
         chart.updateXYSeries("Susceptible", null, susceptibleArray, null);
         chart.updateXYSeries("Infected", null, infectedArray, null);

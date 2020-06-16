@@ -12,7 +12,7 @@ public class ProbabilityWithInterventions {
     private double glovePercent;
 //    private double N95Pct;
 
-    private double SOCIALDISTANCING_EFFECTIVENESS = 0;
+    private double SOCIALDISTANCING_EFFECTIVENESS = 0.81;
     private double HANDWASHING_EFFECTIVENESS = 0.55;
     private double MASK_EFFECTIVENESS = 0.68;
     private double GLOVE_EFFECTIVENESS = 0.57;
