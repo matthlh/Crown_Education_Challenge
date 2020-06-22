@@ -1,0 +1,9 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="Crown_Education_Challenge:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/Crown_Education_Challenge_jar</output-path>
+    <root id="archive" name="Crown_Education_Challenge.jar">
+      <element id="module-output" name="Crown_Education_Challenge" />
+      <element id="extracted-dir" path="$USER_HOME$/Downloads/xchart-3.6.3/xchart-3.6.3.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
