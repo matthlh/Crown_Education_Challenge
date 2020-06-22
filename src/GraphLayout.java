@@ -23,7 +23,6 @@ public class GraphLayout implements ActionListener {
     int delay;
 
     OrdinaryDifferentialEquations calculator;
-    ControlLayout controlLayoutPane;
 
     public GraphLayout() {
         timer = new Timer(500, this);
@@ -31,7 +30,6 @@ public class GraphLayout implements ActionListener {
     }
 
     public void drawComponents() {
-        controlLayoutPane = new ControlLayout(this);
         population = 1000;
         s = population - 1;
         i = population - s;
@@ -71,14 +69,14 @@ public class GraphLayout implements ActionListener {
         repaint();
     }
 
-    public void addPoints(int pop, int duration, double[] interventions, int averageContactRate, double transmissionProbability) {
+    public void addPoints(int pop, int duration, double[] interventions, double averageContactRate, double transmissionProbability, ControlLayout controlLayout) {
         // Initializes variables
         if (pop == 0) {
-            pop = 1;
+            resetChart();
+            stopSimulation();
+            return;
         }
-        if(duration == 0) {
-            duration = 1;
-        }
+
         delay = 3;
         population = pop;
         s = population - 1;
@@ -92,7 +90,7 @@ public class GraphLayout implements ActionListener {
         System.out.println("r: " + r + "\n");
         System.out.println("AWOIHDOAIWHDOIAWH");
 
-        calculator = new OrdinaryDifferentialEquations(population, s, i, r, duration, interventions, averageContactRate, transmissionProbability);
+        calculator = new OrdinaryDifferentialEquations(population, s, i, r, duration, interventions, averageContactRate, transmissionProbability, controlLayout);
     }
 
     @Override

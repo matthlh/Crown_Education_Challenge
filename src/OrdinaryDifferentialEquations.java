@@ -6,11 +6,12 @@ public class OrdinaryDifferentialEquations {
     private double duration;
     private double r0;
     private double transmissionProbability;
-    private int averageContactRate;
+    private double averageContactRate;
     private double removalRate;
     private double beta;
+    private ControlLayout controlLayout;
 
-    public OrdinaryDifferentialEquations(double population, double s, double i, double r, double duration, double[] interventions, int averageContactRate, double transmissionProbability) {
+    public OrdinaryDifferentialEquations(double population, double s, double i, double r, double duration, double[] interventions, double averageContactRate, double transmissionProbability, ControlLayout controlLayout) {
         this.population = population;
         this. s = s;
         this.i = i;
@@ -18,8 +19,13 @@ public class OrdinaryDifferentialEquations {
         this.duration = duration;
         this.averageContactRate = averageContactRate;
         this.transmissionProbability = transmissionProbability;
+        this.controlLayout = controlLayout;
 
-        this.removalRate = 1/duration;
+        if(duration != 0) {
+            this.removalRate = 1/duration;
+        } else {
+            this.removalRate = 1;
+        }
         this.transmissionProbability = new ProbabilityWithInterventions(transmissionProbability, interventions).calculate();
 
         this.beta = this.averageContactRate * this.transmissionProbability;
@@ -30,6 +36,8 @@ public class OrdinaryDifferentialEquations {
         System.out.println("===============================================");
 
         this.r0 = beta * duration;
+
+
     }
 
     public double getinfected() {
@@ -108,6 +116,6 @@ public class OrdinaryDifferentialEquations {
         System.out.println("r: " + r + "\n");
         System.out.println("Total: " + (s + i + r));
 
-        System.out.println("R0: " + r0 + "\n");
+        controlLayout.R0.setText("R0: " + String.format("%.2f", r0));
     }
 }

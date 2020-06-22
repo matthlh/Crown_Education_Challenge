@@ -1,3 +1,5 @@
+import javafx.scene.control.ComboBox;
+
 import javax.swing.*;
 import java.awt.*;
 import java.net.URI;
@@ -12,9 +14,19 @@ public class ControlLayout extends JPanel{
     double wearingMaskPercent;
     double wearingGlovePercent;
 
+    String[] presetString = {"Default", "COVID-19", "SARS", "H1N1", "Custom"};
+
+    JButton start;
+    JButton reset;
+    JButton R0;
+
     JButton normalSpeed;
     JButton doubleSpeed;
     JButton x1000Speed;
+
+    JButton presets;
+    JComboBox<String> presetList;
+    JLabel chosenPresets;
 
     JButton population;
     JSlider populationSlider;
@@ -27,10 +39,6 @@ public class ControlLayout extends JPanel{
     JButton transmissionRisk;
     JSlider transmissionRiskSlider;
     JLabel chosenTransmissionRisk;
-
-    JButton averageContactRate;
-    JSlider averageContactRateSlider;
-    JLabel chosenAverageContactRate;
 
     JButton socialDistance;
     JSlider socialDistanceSlider;
@@ -48,10 +56,6 @@ public class ControlLayout extends JPanel{
     JSlider wearingGloveSlider;
     JLabel chosenWearingGlove;
 
-    JButton info;
-    JButton start;
-    JButton reset;
-
     public ControlLayout(GraphLayout gl) {
         this.graphLayout = gl;
         startListener = new StartListener(this, graphLayout);
@@ -63,9 +67,17 @@ public class ControlLayout extends JPanel{
 
     public void drawComponents() {
         // Initializes all the components
+        start = new JButton("Start Simulation");
+        reset = new JButton("Reset Simulation");
+        R0 = new JButton("R0: ");
+
         normalSpeed = new JButton("Normal Speed");
         doubleSpeed = new JButton("x2 Speed");
         x1000Speed = new JButton("x1000 Speed");
+
+        presets = new JButton("Presets:");
+        presetList = new JComboBox(presetString);
+        chosenPresets = new JLabel("Default", SwingConstants.CENTER);
 
         population = new JButton("Population Size");
         populationSlider = new JSlider(0, 10000);
@@ -73,17 +85,13 @@ public class ControlLayout extends JPanel{
 
         duration = new JButton("Disease Duration (Days)");
         durationSlider = new JSlider(0, 50);
-        chosenDuration = new JLabel("20 Days", SwingConstants.CENTER);
+        chosenDuration = new JLabel("10 Days", SwingConstants.CENTER);
 
         transmissionRisk = new JButton("Probability of Transmission");
         transmissionRiskSlider = new JSlider(0, 100);
-        chosenTransmissionRisk = new JLabel("10%", SwingConstants.CENTER);
+        chosenTransmissionRisk = new JLabel("20%", SwingConstants.CENTER);
 
-        averageContactRate = new JButton("Average Rate of Contact");
-        averageContactRateSlider = new JSlider(0, 50);
-        chosenAverageContactRate = new JLabel("8 People", SwingConstants.CENTER);
-
-        socialDistance = new JButton("<html>Percentage of People Social Distancing: ");
+        socialDistance = new JButton("Percentage of People Social Distancing: ");
         socialDistanceSlider = new JSlider(0, 100);
         chosenSocialDistance = new JLabel("0%", SwingConstants.CENTER);
 
@@ -99,21 +107,17 @@ public class ControlLayout extends JPanel{
         wearingGloveSlider = new JSlider(0, 100);
         chosenWearingGlove = new JLabel("0%", SwingConstants.CENTER);
 
-        info = new JButton("More Information");
-        start = new JButton("Start Simulation");
-        reset = new JButton("Reset Simulation");
-
         start.setName("Play Button");
         reset.setName("Reset Button");
 
         // Add tooltips
+        R0.setToolTipText("This is the current R0 in this model. " +
+                "Click for More!");
         population.setToolTipText("Sets the population for the simulation. " +
                 "Click for More!");
         duration.setToolTipText("Sets the disease  duration. " +
                 "Click for More!");
         transmissionRisk.setToolTipText("Change the probability of infecting per contact. " +
-                "Click for More!");
-        averageContactRate.setToolTipText("Change the average contact per person. " +
                 "Click for More!");
         socialDistance.setToolTipText("Sets the percentage of people social distancing. " +
                 "Click for More!");
@@ -124,6 +128,12 @@ public class ControlLayout extends JPanel{
         wearingGlove.setToolTipText("Sets the percentage of people wearing a glove. " +
                 "Click for More!");
 
+        R0.setBorderPainted(false);
+        R0.setOpaque(false);
+
+        presets.setBorderPainted(false);
+        presets.setOpaque(false);
+
         population.setBorderPainted(false);
         population.setOpaque(false);
 
@@ -132,9 +142,6 @@ public class ControlLayout extends JPanel{
 
         transmissionRisk.setBorderPainted(false);
         transmissionRisk.setOpaque(false);
-
-        averageContactRate.setBorderPainted(false);
-        averageContactRate.setOpaque(false);
 
         socialDistance.setBorderPainted(false);
         socialDistance.setOpaque(false);
@@ -149,56 +156,70 @@ public class ControlLayout extends JPanel{
         wearingGlove.setOpaque(false);
 
         try {
-//            population.addActionListener(new HTTPListener(new URI("https://www.google.com/")));
-//            duration.addActionListener(new HTTPListener(new URI("https://www.google.com/")));
-//            transmissionRisk.addActionListener(new HTTPListener(new URI("https://www.google.com/")));
-//            averageContactRate.addActionListener(new HTTPListener(new URI("https://www.google.com/")));
+            R0.addActionListener(new HTTPListener
+                    (new URI("https://www.laptopand.me/behind-the-curve#R0")));
+            presets.addActionListener(new HTTPListener
+                    (new URI("https://www.laptopand.me/behind-the-curve#presets")));
+            population.addActionListener(new HTTPListener
+                    (new URI("https://www.laptopand.me/behind-the-curve#SIR_Model")));
+            duration.addActionListener(new HTTPListener
+                    (new URI("https://www.laptopand.me/behind-the-curve#Equations")));
+            transmissionRisk.addActionListener(new HTTPListener
+                    (new URI("https://www.laptopand.me/behind-the-curve#Infection_and_Removal_Rate")));
             socialDistance.addActionListener(new HTTPListener
-                    (new URI("https://www.medrxiv.org/content/10.1101/2020.04.16.20068403v1")));
+                    (new URI("https://www.laptopand.me/behind-the-curve#Social_Distancing")));
             handWashing.addActionListener(new HTTPListener
-                    (new URI("https://www.bmj.com/content/336/7635/77.short")));
+                    (new URI("https://www.laptopand.me/behind-the-curve#Washing_Hands")));
             wearingMask.addActionListener(new HTTPListener
-                    (new URI("https://www.bmj.com/content/336/7635/77.short")));
+                    (new URI("https://www.laptopand.me/behind-the-curve#Wearing_Masks")));
             wearingGlove.addActionListener(new HTTPListener
-                    (new URI("https://www.bmj.com/content/336/7635/77.short")));
+                    (new URI("https://www.laptopand.me/behind-the-curve#Wearing_Gloves")));
         } catch (Exception e) {
             e.printStackTrace();
         }
 
         // Sets the limits and ticks for the sliders
         setFactorSettings(populationSlider, 1000, 2000, 100);
-        setFactorSettings(durationSlider, 20, 10, 1);
-        setFactorSettings(transmissionRiskSlider, 10, 10, 1);
-        setFactorSettings(averageContactRateSlider, 8, 10, 1);
+        setFactorSettings(durationSlider, 10, 10, 1);
+        setFactorSettings(transmissionRiskSlider, 20, 10, 1);
         setFactorSettings(socialDistanceSlider, 0, 10, 1);
         setFactorSettings(handWashingSlider, 0, 10, 1);
         setFactorSettings(wearingMaskSlider, 0, 10, 1);
         setFactorSettings(wearingGloveSlider, 0, 10, 1);
+
+        // Adds ActionListener to each button
+        start.addActionListener(startListener);
+        reset.addActionListener(startListener);
 
         // Add ActionListener to speed buttons
         normalSpeed.addActionListener(new SpeedButtonListener(1000, graphLayout));
         doubleSpeed.addActionListener(new SpeedButtonListener(500, graphLayout));
         x1000Speed.addActionListener(new SpeedButtonListener(1, graphLayout));
 
-        // Adds ActionListener to each Slider
-        populationSlider.addChangeListener(new SliderListener(chosenPopulation, populationSlider, " People"));
-        durationSlider.addChangeListener(new SliderListener(chosenDuration, durationSlider, " Days"));
-        averageContactRateSlider.addChangeListener(new SliderListener(chosenAverageContactRate, averageContactRateSlider, " People"));
-        transmissionRiskSlider.addChangeListener(new SliderListener(chosenTransmissionRisk, transmissionRiskSlider, "%"));
-        socialDistanceSlider.addChangeListener(new SliderListener(chosenSocialDistance, socialDistanceSlider, "%"));
-        handWashingSlider.addChangeListener(new SliderListener(chosenHandWashing, handWashingSlider, "%"));
-        wearingMaskSlider.addChangeListener(new SliderListener(chosenWearingMask, wearingMaskSlider, "%"));
-        wearingGloveSlider.addChangeListener(new SliderListener(chosenWearingGlove, wearingGloveSlider, "%"));
+        // Adds ActionsListener to ComboBox
+        presetList.addActionListener(new PresetListener(presetList, chosenPresets,this));
 
-        // Add ActionListener to each button
-        info.addActionListener(infoListener);
-        start.addActionListener(startListener);
-        reset.addActionListener(startListener);
+        // Adds ActionListener to each Slider
+        populationSlider.addChangeListener(new SliderListener(chosenPopulation, populationSlider, " People", this));
+        durationSlider.addChangeListener(new SliderListener(chosenDuration, durationSlider, " Days", this));
+        transmissionRiskSlider.addChangeListener(new SliderListener(chosenTransmissionRisk, transmissionRiskSlider, "%", this));
+        socialDistanceSlider.addChangeListener(new SliderListener(chosenSocialDistance, socialDistanceSlider, "%", this));
+        handWashingSlider.addChangeListener(new SliderListener(chosenHandWashing, handWashingSlider, "%", this));
+        wearingMaskSlider.addChangeListener(new SliderListener(chosenWearingMask, wearingMaskSlider, "%", this));
+        wearingGloveSlider.addChangeListener(new SliderListener(chosenWearingGlove, wearingGloveSlider, "%", this));
 
         // Adds all the components to the JPanel
+        add(start);
+        add(reset);
+        add(R0);
+
         add(normalSpeed);
         add(doubleSpeed);
         add(x1000Speed);
+
+        add(presets);
+        add(presetList);
+        add(chosenPresets);
 
         add(population);
         add(populationSlider);
@@ -211,10 +232,6 @@ public class ControlLayout extends JPanel{
         add(transmissionRisk);
         add(transmissionRiskSlider);
         add(chosenTransmissionRisk);
-
-        add(averageContactRate);
-        add(averageContactRateSlider);
-        add(chosenAverageContactRate);
 
         add(socialDistance);
         add(socialDistanceSlider);
@@ -231,10 +248,6 @@ public class ControlLayout extends JPanel{
         add(wearingGlove);
         add(wearingGloveSlider);
         add(chosenWearingGlove);
-
-        add(info);
-        add(start);
-        add(reset);
     }
 
     public void setFactorSettings(JSlider slider, int value, int majorTick, int minorTick) {
