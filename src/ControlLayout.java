@@ -6,7 +6,6 @@ import java.net.URI;
 
 public class ControlLayout extends JPanel{
     GraphLayout graphLayout;
-    InformationButtonListener infoListener;
     StartListener startListener;
 
     double socialDistancePercent;
@@ -57,16 +56,16 @@ public class ControlLayout extends JPanel{
     JLabel chosenWearingGlove;
 
     public ControlLayout(GraphLayout gl) {
+        // Initialize panel Settings
         this.graphLayout = gl;
         startListener = new StartListener(this, graphLayout);
-        infoListener = new InformationButtonListener();
         setLayout(new GridLayout(10, 3));
         setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
         drawComponents();
     }
 
     public void drawComponents() {
-        // Initializes all the components
+        // Creates and adds components to Panel
         start = new JButton("Start Simulation");
         reset = new JButton("Reset Simulation");
         R0 = new JButton("R0: ");
@@ -76,7 +75,7 @@ public class ControlLayout extends JPanel{
         x1000Speed = new JButton("x1000 Speed");
 
         presets = new JButton("Presets:");
-        presetList = new JComboBox(presetString);
+        presetList = new JComboBox<>(presetString);
         chosenPresets = new JLabel("Default", SwingConstants.CENTER);
 
         population = new JButton("Population Size");
@@ -155,6 +154,7 @@ public class ControlLayout extends JPanel{
         wearingGlove.setBorderPainted(false);
         wearingGlove.setOpaque(false);
 
+        // Sets links for more information
         try {
             R0.addActionListener(new HTTPListener
                     (new URI("https://www.laptopand.me/behind-the-curve#R0")));

@@ -30,6 +30,7 @@ public class GraphLayout implements ActionListener {
     }
 
     public void drawComponents() {
+        // Creates and adds components to Panel
         population = 1000;
         s = population - 1;
         i = population - s;
@@ -51,14 +52,6 @@ public class GraphLayout implements ActionListener {
 //        chart.getStyler().setLegendPosition(Styler.LegendPosition.InsideNE);
         chart.getStyler().setDefaultSeriesRenderStyle(XYSeries.XYSeriesRenderStyle.Area);
         chart.getStyler().setMarkerSize(0);
-
-//        susceptibleSeries.setFillColor(Color.BLUE);
-//        infectedSeries.setFillColor(Color.ORANGE);
-//        recoveredSeries.setFillColor(Color.GRAY);
-//
-//        susceptibleSeries.setLineColor(Color.BLUE);
-//        infectedSeries.setLineColor(Color.ORANGE);
-//        recoveredSeries.setLineColor(Color.GRAY);
 
         susceptibleSeries.setEnabled(true);
         infectedSeries.setEnabled(true);

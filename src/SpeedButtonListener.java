@@ -12,6 +12,7 @@ public class SpeedButtonListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        // Changes the speed of the simulator
         graphLayout.changeTimerDelay(milliseconds);
     }
 }

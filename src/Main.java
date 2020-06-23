@@ -11,14 +11,17 @@ public class Main {
 
 
     public static void main(String[] args) {
+        // Initializes panels
         myContainer = new JPanel();
         graphLayout = new GraphLayout();
         controlLayoutPane = new ControlLayout(graphLayout);
         scrollPane = new JScrollPane(controlLayoutPane);
 
+        // Sets preferred size
         graphLayout.panel.setPreferredSize(new Dimension(1500, 1000));
         scrollPane.setPreferredSize(new Dimension(1500, 400));
 
+        // Adds panels to main panel
         myContainer.setLayout(new BoxLayout(myContainer, BoxLayout.Y_AXIS));
         myContainer.add(graphLayout.panel);
         myContainer.add(scrollPane);

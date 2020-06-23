@@ -4,8 +4,8 @@ import java.awt.event.ActionListener;
 
 public class StartListener implements ActionListener {
 
-    private ControlLayout controlPane;
-    private GraphLayout graphLayout;
+    private final ControlLayout controlPane;
+    private final GraphLayout graphLayout;
 
     private boolean hasStarted = false;
     private boolean isSimulating = false;
@@ -18,6 +18,8 @@ public class StartListener implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         JButton button = (JButton)e.getSource();
+
+        //Checks if the use restarted the simulation
         if (button.getName().equalsIgnoreCase("Reset Button")) {
             graphLayout.stopSimulation();
 
@@ -31,7 +33,7 @@ public class StartListener implements ActionListener {
 
         runFirstTime();
 
-        //Checks if the use restarted the simulation
+        // If they didn't restart the simulation, check if they either paused or started the simulation
         if (isSimulating && (button.getName().equalsIgnoreCase("Play Button"))) {
             graphLayout.stopSimulation();
 
@@ -46,6 +48,7 @@ public class StartListener implements ActionListener {
     }
 
     private void runFirstTime() {
+        // Initializes graph and adds all the factors
         if (!hasStarted) {
             int population = controlPane.populationSlider.getValue();
             int duration = controlPane.durationSlider.getValue();

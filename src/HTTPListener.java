@@ -12,8 +12,10 @@ public class HTTPListener implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+        // Checks if the computer has a browser
         if(Desktop.isDesktopSupported()) {
             try {
+                // Tries to redirect user to website
                 Desktop.getDesktop().browse(uri);
             } catch (Exception exception) {
                 exception.printStackTrace();

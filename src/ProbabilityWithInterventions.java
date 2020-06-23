@@ -2,21 +2,18 @@ public class ProbabilityWithInterventions {
 
     GraphLayout graphLayout;
     ControlLayout controlLayout;
-    OrdinaryDifferentialEquations ode;
 
-    private double[] allInterventions;
+    private final double[] allInterventions;
 
-    private double socialDistancingPercent;
-    private double handWashingPercent;
-    private double maskPercent;
-    private double glovePercent;
-//    private double N95Pct;
+    private final double socialDistancingPercent;
+    private final double handWashingPercent;
+    private final double maskPercent;
+    private final double glovePercent;
 
-    private double SOCIALDISTANCING_EFFECTIVENESS = 0.81;
-    private double HANDWASHING_EFFECTIVENESS = 0.55;
-    private double MASK_EFFECTIVENESS = 0.68;
-    private double GLOVE_EFFECTIVENESS = 0.57;
-//    private double N95_MASK_EFFECTIVENESS = 0.91;
+    private final double SOCIALDISTANCING_EFFECTIVENESS = 0.81;
+    private final double HANDWASHING_EFFECTIVENESS = 0.55;
+    private final double MASK_EFFECTIVENESS = 0.68;
+    private final double GLOVE_EFFECTIVENESS = 0.57;
 
     private double probabilityOfInfection;
 
@@ -31,16 +28,10 @@ public class ProbabilityWithInterventions {
         handWashingPercent = allInterventions[1]/100;
         maskPercent = allInterventions[2]/100;
         glovePercent = allInterventions[3]/100;
-
-        System.out.println(socialDistancingPercent);
-        System.out.println(handWashingPercent);
-        System.out.println(maskPercent);
-        System.out.println(glovePercent);
-
-        System.out.println("+================");
     }
 
     public double calculate() {
+        // Calculates the new probability of infection with interventions
         System.out.println("Probability before everything: " + probabilityOfInfection);
         probabilityOfInfection *= 1 - (SOCIALDISTANCING_EFFECTIVENESS * socialDistancingPercent);
         System.out.println("Probability After SD: " + probabilityOfInfection);

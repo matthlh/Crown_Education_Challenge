@@ -1,15 +1,15 @@
 public class OrdinaryDifferentialEquations {
-    private double population;
+    private final double population;
     private double s;
     private double i;
     private double r;
-    private double duration;
-    private double r0;
+    private final double duration;
+    private final double r0;
     private double transmissionProbability;
-    private double averageContactRate;
-    private double removalRate;
-    private double beta;
-    private ControlLayout controlLayout;
+    private final double averageContactRate;
+    private final double removalRate;
+    private final double beta;
+    private final ControlLayout controlLayout;
 
     public OrdinaryDifferentialEquations(double population, double s, double i, double r, double duration, double[] interventions, double averageContactRate, double transmissionProbability, ControlLayout controlLayout) {
         this.population = population;
@@ -45,48 +45,6 @@ public class OrdinaryDifferentialEquations {
     }
 
     public void calculate(GraphLayout graphLayout) {
-        /*
-        SIR disease model without vital dynamics
-
-        R0 implies
-            no vaccinated
-            No way to control spread of disease
-            Everyone is susceptible
-
-        R0 is also usually misinterpreted
-            It is not a rate over time, but is a
-
-
-        S' = (-a * SI)/population
-        I' = (a * SI)/population - bI
-        R' = bI
-
-
-
-        int newlyInfected = (a * s * i)/population; force of infection
-        int newlyRecovered = duration * i
-
-        s -= newlyInfected;
-        i += newlyInfected - newlyRecovered;
-        r += newlyRecovered;
-
-        a = transmission from Infected to susceptible chance
-        duration = recovery rate
-
-        r0 = a/duration --> infection rate / recovery rate
-        a = t * c
-        t = probability of infecting if contacted
-        c = average rate of contact
-        v = 1/duration = infection length
-
-        r0 = t * c * v
-
-        I am using forward euler method or forward euler integration to solve
-
-        My model is consideredd deterministic
-        */
-
-
         // Number of people who will be infected this round
         double newlyInfected = ((beta * s * i)/population);
         if(s < newlyInfected) {

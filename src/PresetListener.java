@@ -3,12 +3,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class PresetListener implements ActionListener {
-    JComboBox comboBox;
+    JComboBox<String> comboBox;
     JLabel label;
     String s;
     ControlLayout controlLayout;
 
-    public PresetListener(JComboBox comboBox, JLabel label, ControlLayout controlLayout) {
+    public PresetListener(JComboBox<String> comboBox, JLabel label, ControlLayout controlLayout) {
         this.comboBox = comboBox;
         this.label = label;
         this.controlLayout = controlLayout;
@@ -20,6 +20,7 @@ public class PresetListener implements ActionListener {
         s = (String) comboBox.getSelectedItem();
         controlLayout.chosenPresets.setText(s);
 
+        // Checks which preset is selected in the comboBox and changes accordingly
         switch (s) {
             case "Default":
                 setSliderAndLabelValue(controlLayout.populationSlider,
