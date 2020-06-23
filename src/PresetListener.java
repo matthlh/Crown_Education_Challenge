@@ -30,33 +30,37 @@ public class PresetListener implements ActionListener {
                         controlLayout.chosenTransmissionRisk, 20, "%");
                 comboBox.setSelectedItem(s);
                 label.setText(s);
+                break;
             case "COVID-19":
                 setSliderAndLabelValue(controlLayout.populationSlider,
                         controlLayout.chosenPopulation, 1000, " People");
                 setSliderAndLabelValue(controlLayout.durationSlider,
-                        controlLayout.chosenDuration, 10, " Days");
+                        controlLayout.chosenDuration, 14, " Days");
                 setSliderAndLabelValue(controlLayout.transmissionRiskSlider,
-                        controlLayout.chosenTransmissionRisk, 20, "%");
+                        controlLayout.chosenTransmissionRisk, 6, "%");
                 comboBox.setSelectedItem(s);
                 label.setText(s);
+                break;
             case "SARS":
                 setSliderAndLabelValue(controlLayout.populationSlider,
                         controlLayout.chosenPopulation, 1000, " People");
                 setSliderAndLabelValue(controlLayout.durationSlider,
-                        controlLayout.chosenDuration, 10, " Days");
+                        controlLayout.chosenDuration, 28, " Days");
                 setSliderAndLabelValue(controlLayout.transmissionRiskSlider,
-                        controlLayout.chosenTransmissionRisk, 20, "%");
+                        controlLayout.chosenTransmissionRisk, 2, "%");
                 comboBox.setSelectedItem(s);
                 label.setText(s);
+                break;
             case "H1N1":
                 setSliderAndLabelValue(controlLayout.populationSlider,
                         controlLayout.chosenPopulation, 1000, " People");
                 setSliderAndLabelValue(controlLayout.durationSlider,
-                        controlLayout.chosenDuration, 10, " Days");
+                        controlLayout.chosenDuration, 7, " Days");
                 setSliderAndLabelValue(controlLayout.transmissionRiskSlider,
-                        controlLayout.chosenTransmissionRisk, 20, "%");
+                        controlLayout.chosenTransmissionRisk, 4, "%");
                 comboBox.setSelectedItem(s);
                 label.setText(s);
+                break;
             default:
                 break;
         }

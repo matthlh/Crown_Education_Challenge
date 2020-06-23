@@ -50,7 +50,7 @@ public class StartListener implements ActionListener {
             int population = controlPane.populationSlider.getValue();
             int duration = controlPane.durationSlider.getValue();
             double[] interventions = controlPane.getInterventions();
-            double averageContactRate = 4 * ((double)population/1000);
+            double averageContactRate = 6 * ((double)population/1000);
             double transmissionProbability = controlPane.transmissionRiskSlider.getValue() * 0.01;
 
             graphLayout.addPoints(population, duration, interventions, averageContactRate, transmissionProbability, controlPane);
