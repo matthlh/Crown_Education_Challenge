@@ -1,5 +1,3 @@
-import javafx.scene.control.ComboBox;
-
 import javax.swing.*;
 import java.awt.*;
 import java.net.URI;
@@ -114,7 +112,7 @@ public class ControlLayout extends JPanel{
                 "Click for More!");
         population.setToolTipText("Sets the population for the simulation. " +
                 "Click for More!");
-        duration.setToolTipText("Sets the disease  duration. " +
+        duration.setToolTipText("Sets the disease duration. " +
                 "Click for More!");
         transmissionRisk.setToolTipText("Change the probability of infecting per contact. " +
                 "Click for More!");
