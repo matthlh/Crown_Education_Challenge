@@ -157,7 +157,7 @@ public class ControlLayout extends JPanel{
             R0.addActionListener(new HTTPListener
                     (new URI("https://www.laptopand.me/behind-the-curve#R0")));
             presets.addActionListener(new HTTPListener
-                    (new URI("https://www.laptopand.me/behind-the-curve#presets")));
+                    (new URI("https://www.laptopand.me/behind-the-curve#Presets")));
             population.addActionListener(new HTTPListener
                     (new URI("https://www.laptopand.me/behind-the-curve#SIR_Model")));
             duration.addActionListener(new HTTPListener
