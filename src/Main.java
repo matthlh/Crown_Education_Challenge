@@ -28,7 +28,7 @@ public class Main {
 
         scrollPane.getVerticalScrollBar().setUnitIncrement(16);
 
-        frame = new JFrame("Pandemic Simulator");
+        frame = new JFrame("Behind The Curve");
 
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 

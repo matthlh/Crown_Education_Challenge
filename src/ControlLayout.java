@@ -76,7 +76,7 @@ public class ControlLayout extends JPanel{
         presetList = new JComboBox<>(presetString);
         chosenPresets = new JLabel("Default", SwingConstants.CENTER);
 
-        population = new JButton("Population Size");
+        population = new JButton("Population Density");
         populationSlider = new JSlider(0, 10000);
         chosenPopulation = new JLabel("1000 People", SwingConstants.CENTER);
 
@@ -110,7 +110,7 @@ public class ControlLayout extends JPanel{
         // Add tooltips
         R0.setToolTipText("This is the current R0 in this model. " +
                 "Click for More!");
-        population.setToolTipText("Sets the population for the simulation. " +
+        population.setToolTipText("Sets the population density for the simulation. " +
                 "Click for More!");
         duration.setToolTipText("Sets the disease duration. " +
                 "Click for More!");
@@ -125,32 +125,6 @@ public class ControlLayout extends JPanel{
         wearingGlove.setToolTipText("Sets the percentage of people wearing a glove. " +
                 "Click for More!");
 
-        R0.setBorderPainted(false);
-        R0.setOpaque(false);
-
-        presets.setBorderPainted(false);
-        presets.setOpaque(false);
-
-        population.setBorderPainted(false);
-        population.setOpaque(false);
-
-        duration.setBorderPainted(false);
-        duration.setOpaque(false);
-
-        transmissionRisk.setBorderPainted(false);
-        transmissionRisk.setOpaque(false);
-
-        socialDistance.setBorderPainted(false);
-        socialDistance.setOpaque(false);
-
-        handWashing.setBorderPainted(false);
-        handWashing.setOpaque(false);
-
-        wearingMask.setBorderPainted(false);
-        wearingMask.setOpaque(false);
-
-        wearingGlove.setBorderPainted(false);
-        wearingGlove.setOpaque(false);
 
         // Sets links for more information
         try {
@@ -198,7 +172,7 @@ public class ControlLayout extends JPanel{
         presetList.addActionListener(new PresetListener(presetList, chosenPresets,this));
 
         // Adds ActionListener to each Slider
-        populationSlider.addChangeListener(new SliderListener(chosenPopulation, populationSlider, " People", this));
+        populationSlider.addChangeListener(new SliderListener(chosenPopulation, populationSlider, " People per km^2", this));
         durationSlider.addChangeListener(new SliderListener(chosenDuration, durationSlider, " Days", this));
         transmissionRiskSlider.addChangeListener(new SliderListener(chosenTransmissionRisk, transmissionRiskSlider, "%", this));
         socialDistanceSlider.addChangeListener(new SliderListener(chosenSocialDistance, socialDistanceSlider, "%", this));
